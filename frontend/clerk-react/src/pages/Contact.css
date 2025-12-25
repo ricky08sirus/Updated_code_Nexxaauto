@@ -1,0 +1,331 @@
+.contact-page {
+  background: white;
+  padding: 60px 20px;
+}
+
+.contact-wrapper {
+  max-width: 1200px;
+  margin: auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  display: flex;
+  gap: 40px;
+}
+
+/* LEFT */
+.contact-left {
+  flex: 1;
+}
+
+.contact-left h2 {
+  margin-bottom: 15px;
+  font-size: 38px;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgb(0 0 0 / 59%);
+}
+
+.contact-left span {
+  color: red;
+}
+
+.contact-left p {
+  color: #444;
+  line-height: 1.7;
+}
+
+/* RIGHT */
+.contact-right {
+  flex: 1;
+}
+
+.contact-right h3 {
+  font-size: 25px;
+  margin-bottom: 20px;
+  padding-top: 7px;
+  font-weight: 500;
+}
+
+.contact-right span {
+  color: red;
+}
+
+.contact-form {
+  border: 1px solid #eee;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin-top: 10rem;
+}
+
+.contact-form h4 {
+  margin-bottom: 15px;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.contact-form textarea {
+  resize: none;
+  height: 100px;
+}
+
+.checkbox {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+.contact-form button {
+  background: red;
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.contact-form button:hover {
+  background: #c90000;
+}
+
+/* CONTACT BOX */
+.contact-box {
+  background: #fff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* CARD */
+.contact-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* ICON + TITLE ROW */
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ICON BOX */
+.contact-icon {
+  color: red;
+  font-size: 22px;
+  background: #f5f5f5;
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px #eee;
+  flex-shrink: 0;
+}
+
+/* TITLE */
+.contact-card h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+}
+
+/* VALUE TEXT */
+.contact-detail {
+  margin-left: 62px;
+  margin-top: 6px;
+  font-size: 19px;
+  color: #444;
+  font-weight: 500;
+}
+
+/* ✅ RESPONSIVE DESIGN */
+
+/* Tablets (768px - 900px) */
+@media (max-width: 900px) {
+  .contact-wrapper {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .contact-form {
+    margin-top: 0;
+  }
+
+  .contact-left h2 {
+    font-size: 32px;
+  }
+
+  .contact-right h3 {
+    font-size: 22px;
+  }
+}
+
+/* Small Tablets & Large Phones (481px - 768px) */
+@media (max-width: 768px) {
+  .contact-page {
+    padding: 40px 15px;
+  }
+
+  .contact-wrapper {
+    padding: 25px;
+  }
+
+  .contact-left h2 {
+    font-size: 28px;
+  }
+
+  .contact-box {
+    padding: 20px;
+  }
+
+  .contact-card {
+    padding: 14px 16px;
+  }
+
+  .contact-icon {
+    font-size: 20px;
+    padding: 10px;
+  }
+
+  .contact-card h4 {
+    font-size: 15px;
+  }
+
+  .contact-detail {
+    margin-left: 56px;
+    font-size: 16px;
+  }
+
+  .contact-form {
+    padding: 20px;
+  }
+
+  .contact-right h3 {
+    font-size: 20px;
+  }
+}
+
+/* Mobile Phones (max-width: 480px) */
+@media (max-width: 480px) {
+  .contact-page {
+    padding: 30px 10px;
+  }
+
+  .contact-wrapper {
+    padding: 20px;
+    gap: 25px;
+  }
+
+  .contact-left h2 {
+    font-size: 26px;
+    margin-bottom: 12px;
+  }
+
+  .contact-left p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .contact-box {
+    padding: 15px;
+    gap: 12px;
+  }
+
+  .contact-card {
+    padding: 12px 14px;
+  }
+
+  .contact-row {
+    gap: 12px;
+  }
+
+  .contact-icon {
+    font-size: 18px;
+    padding: 8px;
+  }
+
+  .contact-card h4 {
+    font-size: 14px;
+  }
+
+  .contact-detail {
+    margin-left: 50px;
+    margin-top: 4px;
+    font-size: 14px;
+  }
+
+  .contact-right h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .contact-form {
+    padding: 18px;
+  }
+
+  .contact-form h4 {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .contact-form textarea {
+    height: 80px;
+  }
+
+  .checkbox {
+    font-size: 12px;
+    gap: 8px;
+  }
+
+  .contact-form button {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+/* Extra Small Phones (max-width: 360px) */
+@media (max-width: 360px) {
+  .contact-left h2 {
+    font-size: 22px;
+  }
+
+  .contact-detail {
+    margin-left: 48px;
+    font-size: 13px;
+  }
+
+  .contact-icon {
+    font-size: 16px;
+    padding: 7px;
+  }
+
+  .contact-card h4 {
+    font-size: 13px;
+  }
+}

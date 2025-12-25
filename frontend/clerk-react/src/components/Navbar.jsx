@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { SignedIn, SignedOut, useClerk, UserButton } from "@clerk/clerk-react";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
-export default function App() {
+export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const clerk = useClerk();
 
@@ -40,44 +41,44 @@ export default function App() {
     });
   };
 
+  const closeMenu = () => setIsMenuOpen(false);
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-screen bg-gray-50">
       {/* Navbar */}
       <nav className="bg-black text-white relative z-50">
         <div className="max-w-full mx-auto px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex-shrink-0">
-              <div className="flex items-center gap-2">
-                <div className="bg-red-600 p-2 rounded">
-                  <span className="text-2xl font-bold">N</span>
-                </div>
-                <span className="text-xl font-bold">EXXA</span>
+            <Link to="/" className="flex items-center gap-2">
+              <div className="bg-red-600 p-2 rounded">
+                <span className="text-2xl font-bold">N</span>
               </div>
-            </div>
+              <span className="text-xl font-bold">EXXA</span>
+            </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#" className="hover:text-red-600 transition-colors">
+              <Link to="/" className="hover:text-red-600 transition-colors">
                 Home
-              </a>
-              <a href="#" className="hover:text-red-600 transition-colors">
+              </Link>
+              <Link to="/parts" className="hover:text-red-600 transition-colors">
                 Parts
-              </a>
-              <a href="#" className="hover:text-red-600 transition-colors">
+              </Link>
+              <Link to="/about" className="hover:text-red-600 transition-colors">
                 About Us
-              </a>
-              <a href="#" className="hover:text-red-600 transition-colors">
+              </Link>
+              <Link to="/contact-us" className="hover:text-red-600 transition-colors">
                 Contact
-              </a>
+              </Link>
             </div>
 
-            {/* Auth Buttons & User Button */}
+            {/* Auth Buttons */}
             <div className="hidden md:flex items-center space-x-4">
               <SignedOut>
                 <button
                   onClick={handleSignIn}
-                  className="px-4 py-2 text-white hover:text-red-600 transition-colors font-medium"
+                  className="px-4 py-2 hover:text-red-600 transition-colors font-medium"
                 >
                   Login
                 </button>
@@ -89,22 +90,15 @@ export default function App() {
                 </button>
               </SignedOut>
               <SignedIn>
-                <UserButton
-                  afterSignOutUrl="/"
-                  appearance={{
-                    elements: {
-                      avatarBox: "w-10 h-10",
-                    },
-                  }}
-                />
+                <UserButton afterSignOutUrl="/" />
               </SignedIn>
             </div>
 
-            {/* Mobile menu button */}
+            {/* Mobile Menu Button */}
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-white hover:text-red-600 transition-colors"
+                className="hover:text-red-600"
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -116,47 +110,52 @@ export default function App() {
         {isMenuOpen && (
           <div className="md:hidden bg-black border-t border-gray-800">
             <div className="px-4 pt-2 pb-4 space-y-3">
-              <a
-                href="#"
-                className="block py-2 hover:text-red-600 transition-colors"
+              <Link
+                to="/"
+                onClick={closeMenu}
+                className="block py-2 hover:text-red-600"
               >
                 Home
-              </a>
-              <a
-                href="#"
-                className="block py-2 hover:text-red-600 transition-colors"
+              </Link>
+              <Link
+                to="/parts"
+                onClick={closeMenu}
+                className="block py-2 hover:text-red-600"
               >
                 Parts
-              </a>
-              <a
-                href="#"
-                className="block py-2 hover:text-red-600 transition-colors"
+              </Link>
+              <Link
+                to="/about"
+                onClick={closeMenu}
+                className="block py-2 hover:text-red-600"
               >
                 About Us
-              </a>
-              <a
-                href="#"
-                className="block py-2 hover:text-red-600 transition-colors"
+              </Link>
+              <Link
+                to="/contact-us"
+                onClick={closeMenu}
+                className="block py-2 hover:text-red-600"
               >
                 Contact
-              </a>
+              </Link>
 
               <SignedOut>
                 <div className="pt-4 space-y-2 border-t border-gray-800">
                   <button
                     onClick={handleSignIn}
-                    className="w-full px-4 py-2 text-left hover:text-red-600 transition-colors font-medium"
+                    className="w-full text-left py-2 hover:text-red-600"
                   >
                     Login
                   </button>
                   <button
                     onClick={handleSignUp}
-                    className="w-full px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md transition-colors font-medium text-center"
+                    className="w-full py-2 bg-red-600 hover:bg-red-700 rounded-md"
                   >
                     Register
                   </button>
                 </div>
               </SignedOut>
+
               <SignedIn>
                 <div className="pt-4 border-t border-gray-800 flex items-center gap-2">
                   <UserButton afterSignOutUrl="/" />
@@ -168,26 +167,17 @@ export default function App() {
         )}
       </nav>
 
-      {/* Secondary Navigation Bar */}
+      {/* Secondary Nav */}
       <div className="bg-gray-900 text-white py-3 overflow-x-auto">
         <div className="max-w-full mx-auto px-8">
           <div className="flex items-center space-x-6 text-sm whitespace-nowrap">
-            <a href="#" className="hover:text-red-600 transition-colors">
-              Used Kia Parts
-            </a>
-            <a href="#" className="hover:text-red-600 transition-colors">
-              Used Porsche Parts
-            </a>
-            <a href="#" className="hover:text-red-600 transition-colors">
-              Used BMW Parts
-            </a>
-            <a href="#" className="hover:text-red-600 transition-colors">
-              Used Mercedes Parts
-            </a>
+            <span className="hover:text-red-600">Used Kia Parts</span>
+            <span className="hover:text-red-600">Used Porsche Parts</span>
+            <span className="hover:text-red-600">Used BMW Parts</span>
+            <span className="hover:text-red-600">Used Mercedes Parts</span>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
