@@ -1,99 +1,85 @@
 # authentication/admin.py
-
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from .models import UserProfile
+from django.utils.html import format_html
+from .models import ContactSubmission
 
 
-@admin.register(UserProfile)
-class UserProfileAdmin(UserAdmin):
+@admin.register(ContactSubmission)
+class ContactSubmissionAdmin(admin.ModelAdmin):
     """
-    Custom admin interface for UserProfile
+    Admin interface for Contact Form Submissions
     """
 
     list_display = [
-        "id",
+        "id_short",
+        "name_or_anonymous",
         "email",
-        "get_full_name_display",
-        "clerk_id_short",
-        "is_active",
+        "subject_short",
+        "status_badge",
         "created_at",
-        "last_sign_in_display",
+        "is_new",
     ]
 
     list_filter = [
-        "is_active",
-        "is_staff",
-        "is_superuser",
+        "status",
         "created_at",
-        "last_sign_in",
+        "resolved_at",
     ]
 
-    search_fields = ["id", "email", "clerk_id", "first_name", "last_name", "username"]
+    search_fields = [
+        "email",
+        "name",
+        "subject",
+        "message",
+        "id",
+    ]
 
     readonly_fields = [
         "id",
-        "clerk_id",
         "created_at",
         "updated_at",
-        "last_login",
-        "last_sign_in",
+        "resolved_at",
+        "ip_address",
+        "user_agent",
     ]
 
     fieldsets = (
-        ("Clerk Information", {"fields": ("clerk_id",)}),
         (
-            "Personal Information",
+            "Contact Information",
             {
                 "fields": (
+                    "id",
                     "email",
-                    "username",
-                    "first_name",
-                    "last_name",
+                    "name",
+                    "phone",
                 )
             },
         ),
         (
-            "Permissions",
+            "Inquiry Details",
             {
                 "fields": (
-                    "is_active",
-                    "is_staff",
-                    "is_superuser",
-                    "groups",
-                    "user_permissions",
+                    "subject",
+                    "message",
+                    "status",
                 )
             },
         ),
         (
-            "Important Dates",
+            "Admin Section",
+            {"fields": ("admin_notes",)},
+        ),
+        (
+            "Metadata",
             {
                 "fields": (
-                    "last_login",
-                    "last_sign_in",
+                    "ip_address",
+                    "user_agent",
                     "created_at",
                     "updated_at",
-                )
-            },
-        ),
-    )
-
-    add_fieldsets = (
-        (
-            None,
-            {
-                "classes": ("wide",),
-                "fields": (
-                    "email",
-                    "clerk_id",
-                    "username",
-                    "first_name",
-                    "last_name",
-                    "password1",
-                    "password2",
-                    "is_active",
-                    "is_staff",
+                    "resolved_at",
                 ),
+                "classes": ("collapse",),
             },
         ),
     )
@@ -101,26 +87,72 @@ class UserProfileAdmin(UserAdmin):
     ordering = ["-created_at"]
     date_hierarchy = "created_at"
 
+    actions = [
+        "mark_as_in_progress",
+        "mark_as_resolved",
+        "mark_as_new",
+    ]
+
     # Custom display methods
-    def get_full_name_display(self, obj):
-        """Display full name in list"""
-        return obj.get_full_name()
+    def id_short(self, obj):
+        """Display shortened UUID"""
+        return str(obj.id)[:8]
 
-    get_full_name_display.short_description = "Full Name"
+    id_short.short_description = "ID"
 
-    def clerk_id_short(self, obj):
-        """Display shortened clerk_id"""
-        if obj.clerk_id:
-            return f"{obj.clerk_id[:20]}..." if len(obj.clerk_id) > 20 else obj.clerk_id
-        return "-"
+    def name_or_anonymous(self, obj):
+        """Display name or 'Anonymous' if not provided"""
+        return obj.name if obj.name else "Anonymous"
 
-    clerk_id_short.short_description = "Clerk ID"
+    name_or_anonymous.short_description = "Name"
 
-    def last_sign_in_display(self, obj):
-        """Display last sign-in with formatting"""
-        if obj.last_sign_in:
-            return obj.last_sign_in.strftime("%Y-%m-%d %H:%M")
-        return "Never"
+    def subject_short(self, obj):
+        """Display shortened subject"""
+        if obj.subject:
+            return obj.subject[:50] + "..." if len(obj.subject) > 50 else obj.subject
+        return "(No subject)"
 
-    # Register your models here.
-    last_sign_in_display.short_description = "Last Sign In"
+    subject_short.short_description = "Subject"
+
+    def status_badge(self, obj):
+        """Display status with color coding"""
+        colors = {
+            "new": "#e74c3c",  # Red
+            "in_progress": "#f39c12",  # Orange
+            "resolved": "#27ae60",  # Green
+            "closed": "#95a5a6",  # Gray
+        }
+        color = colors.get(obj.status, "#95a5a6")
+        return format_html(
+            '<span style="background-color: {}; color: white; padding: 3px 10px; '
+            'border-radius: 3px; font-weight: bold;">{}</span>',
+            color,
+            obj.get_status_display(),
+        )
+
+    status_badge.short_description = "Status"
+
+    # Admin actions
+    def mark_as_in_progress(self, request, queryset):
+        """Mark selected submissions as in progress"""
+        updated = queryset.update(status="in_progress")
+        self.message_user(request, f"{updated} submission(s) marked as in progress.")
+
+    mark_as_in_progress.short_description = "Mark as In Progress"
+
+    def mark_as_resolved(self, request, queryset):
+        """Mark selected submissions as resolved"""
+        count = 0
+        for submission in queryset:
+            submission.mark_as_resolved()
+            count += 1
+        self.message_user(request, f"{count} submission(s) marked as resolved.")
+
+    mark_as_resolved.short_description = "Mark as Resolved"
+
+    def mark_as_new(self, request, queryset):
+        """Mark selected submissions as new"""
+        updated = queryset.update(status="new", resolved_at=None)
+        self.message_user(request, f"{updated} submission(s) marked as new.")
+
+    mark_as_new.short_description = "Mark as New"

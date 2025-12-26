@@ -1,123 +1,131 @@
+# authentication/models.py
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+import uuid
 
 
-class UserProfile(AbstractUser):
+class ContactSubmission(models.Model):
     """
-    Custom user model that syncs with Clerk authentication
-    Extended from Django's AbstractUser
+    Model to store contact form submissions from users
+    No authentication required - anyone can submit
     """
 
-    # Clerk specific fields
-    clerk_id = models.CharField(
-        max_length=255,
-        unique=True,
-        db_index=True,
-        help_text="Unique identifier from Clerk (sub claim in JWT)",
+    STATUS_CHOICES = [
+        ("new", "New"),
+        ("in_progress", "In Progress"),
+        ("resolved", "Resolved"),
+        ("closed", "Closed"),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    # Contact Information
+    email = models.EmailField(
+        max_length=255, help_text="User's email address for response"
     )
 
-    # Override email to make it required and unique
-    email = models.EmailField(
-        _("email address"),
-        unique=True,
-        blank=False,
-        null=False,
-        help_text="User's email address from Clerk",
+    name = models.CharField(
+        max_length=255, blank=True, help_text="User's name (optional)"
+    )
+
+    subject = models.CharField(
+        max_length=255, blank=True, help_text="Subject of the inquiry"
+    )
+
+    # Message/Query
+    message = models.TextField(help_text="User's query or message to the company")
+
+    # Additional Information
+    phone = models.CharField(
+        max_length=20, blank=True, help_text="Phone number (optional)"
+    )
+
+    # Status tracking
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="new",
+        help_text="Current status of the inquiry",
+    )
+
+    # Admin notes
+    admin_notes = models.TextField(
+        blank=True, help_text="Internal notes for admin staff"
     )
 
     # Timestamps
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    last_sign_in = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(
+        auto_now_add=True, help_text="When the contact form was submitted"
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True, help_text="Last time this record was updated"
+    )
+
+    resolved_at = models.DateTimeField(
+        null=True, blank=True, help_text="When the inquiry was resolved"
+    )
+
+    # Metadata
+    ip_address = models.GenericIPAddressField(
+        null=True,
+        blank=True,
+        help_text="IP address of the submitter (for spam prevention)",
+    )
+
+    user_agent = models.TextField(
+        blank=True, help_text="Browser user agent (for spam prevention)"
+    )
 
     class Meta:
-        db_table = "user_profiles"
-        verbose_name = "User Profile"
-        verbose_name_plural = "User Profiles"
+        db_table = "contact_submissions"
+        verbose_name = "Contact Submission"
+        verbose_name_plural = "Contact Submissions"
         ordering = ["-created_at"]
         indexes = [
-            models.Index(fields=["clerk_id"]),
             models.Index(fields=["email"]),
+            models.Index(fields=["status"]),
             models.Index(fields=["-created_at"]),
         ]
 
     def __str__(self):
-        return f"{self.email} ({self.clerk_id})"
+        name_display = self.name if self.name else "Anonymous"
+        return f"{name_display} ({self.email}) - {self.created_at.strftime('%Y-%m-%d')}"
 
-    def get_full_name(self):
-        """Return the full name or email if name not available"""
-        full_name = f"{self.first_name} {self.last_name}".strip()
-        return full_name if full_name else self.email
+    def mark_as_resolved(self):
+        """Mark this inquiry as resolved"""
+        self.status = "resolved"
+        self.resolved_at = timezone.now()
+        self.save(update_fields=["status", "resolved_at", "updated_at"])
 
-    def update_last_sign_in(self):
-        """Update the last sign-in timestamp"""
-        self.last_sign_in = timezone.now()
-        self.save(update_fields=["last_sign_in"])
-
-    @classmethod
-    def get_or_create_from_clerk(cls, clerk_data):
-        """
-        Get or create user from Clerk JWT data
-        Updates user data if it has changed
-
-        Args:
-            clerk_data (dict): Decoded JWT data from Clerk
-
-        Returns:
-            tuple: (user, created) where created is True if new user
-        """
-        clerk_id = clerk_data.get("sub")
-        email = clerk_data.get("email", "")
-
-        if not clerk_id:
-            raise ValueError("clerk_id (sub) is required")
-
-        if not email:
-            raise ValueError("email is required")
-
-        # Extract name from JWT
-        name = clerk_data.get("name", "")
-        first_name = clerk_data.get("given_name", "")
-        last_name = clerk_data.get("family_name", "")
-
-        # If name exists but not split into first/last
-        if name and not (first_name or last_name):
-            name_parts = name.split(" ", 1)
-            first_name = name_parts[0]
-            last_name = name_parts[1] if len(name_parts) > 1 else ""
-
-        # Prepare user data
-        user_defaults = {
-            "email": email,
-            "username": email,  # Use email as username
-            "first_name": first_name or "",
-            "last_name": last_name or "",
-        }
-
-        # Get or create user
-        user, created = cls.objects.update_or_create(
-            clerk_id=clerk_id, defaults=user_defaults
-        )
-
-        # Update last sign-in
-        if not created:
-            user.update_last_sign_in()
-
-        return user, created
+    def mark_as_in_progress(self):
+        """Mark this inquiry as in progress"""
+        self.status = "in_progress"
+        self.save(update_fields=["status", "updated_at"])
 
     def to_dict(self):
-        """Convert user to dictionary for API responses"""
+        """Convert contact submission to dictionary for API responses"""
         return {
-            "id": self.id,
-            "clerk_id": self.clerk_id,
+            "id": str(self.id),
             "email": self.email,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
+            "name": self.name,
+            "subject": self.subject,
+            "message": self.message,
+            "phone": self.phone,
+            "status": self.status,
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
-            "last_sign_in": self.last_sign_in.isoformat()
-            if self.last_sign_in
-            else None,
-        }  # Create your models here.
+        }
+
+    @property
+    def is_new(self):
+        """Check if this is a new, unread submission"""
+        return self.status == "new"
+
+    @property
+    def response_time(self):
+        """Calculate time taken to resolve (if resolved)"""
+        if self.resolved_at:
+            delta = self.resolved_at - self.created_at
+            return delta
+        return None

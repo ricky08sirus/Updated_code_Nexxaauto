@@ -1,107 +1,48 @@
 # authentication/serializers.py
 from rest_framework import serializers
-from .models import UserProfile
+from .models import ContactSubmission
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
+class ContactSubmissionSerializer(serializers.ModelSerializer):
     """
-    Main serializer for UserProfile model
-    Used for authenticated user operations
+    Serializer for contact form submissions
     """
-
-    full_name = serializers.SerializerMethodField()
 
     class Meta:
-        model = UserProfile
+        model = ContactSubmission
         fields = [
             "id",
-            "clerk_id",
+            "name",
             "email",
-            "first_name",
-            "last_name",
-            "full_name",
+            "subject",
+            "message",
+            "phone",
             "created_at",
-            "updated_at",
-            "last_sign_in",
         ]
-        read_only_fields = [
-            "id",
-            "clerk_id",
-            "email",  # Email comes from Clerk, shouldn't be editable here
-            "created_at",
-            "updated_at",
-            "last_sign_in",
-        ]
+        read_only_fields = ["id", "created_at"]
 
-    def get_full_name(self, obj):
-        """Get user's full name"""
-        return obj.get_full_name()
+    def validate_email(self, value):
+        """Validate email format"""
+        if not value or "@" not in value:
+            raise serializers.ValidationError("Please provide a valid email address")
+        return value.lower().strip()
 
+    def validate_message(self, value):
+        """Validate message is not empty and within limits"""
+        if not value or len(value.strip()) < 10:
+            raise serializers.ValidationError(
+                "Message must be at least 10 characters long"
+            )
+        if len(value) > 5000:
+            raise serializers.ValidationError(
+                "Message is too long (max 5000 characters)"
+            )
+        return value.strip()
 
-class UserProfilePublicSerializer(serializers.ModelSerializer):
-    """
-    Public serializer with limited fields
-    Used when displaying user info to other users
-    """
+    def validate_name(self, value):
+        """Clean up name"""
+        return value.strip() if value else ""
 
-    full_name = serializers.SerializerMethodField()
-
-    class Meta:
-        model = UserProfile
-        fields = [
-            "id",
-            "full_name",
-            "first_name",
-            "last_name",
-        ]
-
-    def get_full_name(self, obj):
-        return obj.get_full_name()
-
-
-class UserProfileMinimalSerializer(serializers.ModelSerializer):
-    """
-    Minimal serializer for basic user info
-    Used in nested serializers (e.g., orders, reviews)
-    """
-
-    class Meta:
-        model = UserProfile
-        fields = [
-            "id",
-            "first_name",
-            "last_name",
-        ]
-
-
-class UserStatsSerializer(serializers.ModelSerializer):
-    """
-    Serializer for user statistics
-    """
-
-    full_name = serializers.SerializerMethodField()
-    account_age_days = serializers.SerializerMethodField()
-
-    class Meta:
-        model = UserProfile
-        fields = [
-            "id",
-            "clerk_id",
-            "email",
-            "full_name",
-            "account_age_days",
-            "created_at",
-            "last_sign_in",
-        ]
-
-    def get_full_name(self, obj):
-        return obj.get_full_name()
-
-    def get_account_age_days(self, obj):
-        """Calculate account age in days"""
-        from django.utils import timezone
-
-        if obj.created_at:
-            delta = timezone.now() - obj.created_at
-            return delta.days
-        return 0
+    def validate_subject(self, value):
+        """Clean up subject"""
+        return value.strip() if value else ""

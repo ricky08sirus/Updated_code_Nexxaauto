@@ -1,314 +1,144 @@
 # authentication/views.py
-
-from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from django.utils import timezone
-from django.db import connection
-from .models import UserProfile
-from .serializers import (
-    UserProfileSerializer,
-    UserProfilePublicSerializer,
-    UserStatsSerializer,
-)
+from rest_framework import status
+from .models import ContactSubmission
+from .serializers import ContactSubmissionSerializer
+from .email_utils import send_contact_notification, send_auto_reply_to_customer
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-@api_view(["GET"])
+def get_client_ip(request):
+    """Extract client IP address from request"""
+    x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(",")[0]
+    else:
+        ip = request.META.get("REMOTE_ADDR")
+    return ip
+
+
+@api_view(["POST"])
 @permission_classes([AllowAny])
-def health_check(request):
+def submit_contact_form(request):
     """
-    Health check endpoint - verify API and database are working
-    GET /api/health/
+    Handle contact form submission and send email notifications
+
+    POST /api/contact/
+
+    Body (JSON):
+    {
+        "name": "John Doe",           // Optional
+        "email": "john@example.com",  // Required
+        "subject": "General Inquiry", // Optional
+        "message": "Your message...",  // Required
+        "phone": "+1234567890"        // Optional
+    }
     """
-    try:
-        # Check database connection
-        connection.ensure_connection()
-        db_status = "connected"
-    except Exception as e:
-        logger.error(f"Database connection error: {str(e)}")
-        db_status = "disconnected"
 
-    return Response(
-        {
-            "status": "healthy",
-            "service": "Nexxa Backend API",
-            "database": db_status,
-            "timestamp": timezone.now().isoformat(),
-        }
-    )
+    # Add IP and user agent to the data
+    data = request.data.copy()
 
+    # Create serializer
+    serializer = ContactSubmissionSerializer(data=data)
 
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def get_current_user(request):
-    """
-    Get current authenticated user profile
-    GET /api/user/me/
+    if serializer.is_valid():
+        try:
+            # Save submission with metadata
+            submission = serializer.save(
+                ip_address=get_client_ip(request),
+                user_agent=request.META.get("HTTP_USER_AGENT", "")[:500],
+            )
 
-    Headers:
-        Authorization: Bearer <clerk_jwt_token>
+            logger.info(f"Contact form submitted by {submission.email}")
 
-    Returns:
-        200: User profile data
-        401: Unauthorized
-    """
-    try:
-        serializer = UserProfileSerializer(request.user)
-        return Response(
-            {"success": True, "data": serializer.data}, status=status.HTTP_200_OK
-        )
-    except Exception as e:
-        logger.error(f"Error fetching user profile: {str(e)}", exc_info=True)
-        return Response(
-            {"success": False, "error": "Failed to fetch user profile"},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        )
+            # Send email notification to company
+            email_sent = send_contact_notification(submission)
 
+            # Send auto-reply to customer
+            auto_reply_sent = send_auto_reply_to_customer(submission)
 
-@api_view(["PUT", "PATCH"])
-@permission_classes([IsAuthenticated])
-def update_user_profile(request):
-    """
-    Update current user profile
-    PUT/PATCH /api/user/me/
+            if email_sent:
+                logger.info(
+                    f"Email notification sent successfully for submission {
+                        submission.id
+                    }"
+                )
+            else:
+                logger.warning(
+                    f"Failed to send email notification for submission {submission.id}"
+                )
 
-    Allowed fields: first_name, last_name
+            if auto_reply_sent:
+                logger.info(f"Auto-reply sent to {submission.email}")
+            else:
+                logger.warning(f"Failed to send auto-reply to {submission.email}")
 
-    Body:
-        {
-            "first_name": "John",
-            "last_name": "Doe"
-        }
-
-    Returns:
-        200: Updated user profile
-        400: Validation errors
-    """
-    try:
-        user = request.user
-        serializer = UserProfileSerializer(
-            user,
-            data=request.data,
-            partial=True,  # Allow partial updates
-        )
-
-        if serializer.is_valid():
-            serializer.save()
-            logger.info(f"User profile updated: {user.email}")
             return Response(
                 {
                     "success": True,
-                    "message": "Profile updated successfully",
-                    "data": serializer.data,
+                    "message": "Your message has been sent successfully! We will get back to you soon.",
+                    "submission_id": str(submission.id),
+                    "email_sent": email_sent,
+                    "auto_reply_sent": auto_reply_sent,
                 },
-                status=status.HTTP_200_OK,
+                status=status.HTTP_201_CREATED,
             )
 
-        logger.warning(f"Profile update validation failed: {serializer.errors}")
-        return Response(
-            {"success": False, "errors": serializer.errors},
-            status=status.HTTP_400_BAD_REQUEST,
-        )
+        except Exception as e:
+            logger.error(f"Error saving contact submission: {str(e)}", exc_info=True)
+            return Response(
+                {"error": "Failed to submit form. Please try again later."},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
-    except Exception as e:
-        logger.error(f"Error updating user profile: {str(e)}", exc_info=True)
-        return Response(
-            {"success": False, "error": "Failed to update profile"},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        )
-
-
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def get_user_stats(request):
-    """
-    Get current user statistics
-    GET /api/user/stats/
-
-    Returns:
-        200: User statistics (id, clerk_id, email, full_name, account_age_days, created_at, last_sign_in)
-    """
-    try:
-        serializer = UserStatsSerializer(request.user)
-        return Response(
-            {"success": True, "data": serializer.data}, status=status.HTTP_200_OK
-        )
-    except Exception as e:
-        logger.error(f"Error fetching user stats: {str(e)}")
-        return Response(
-            {"success": False, "error": "Failed to fetch statistics"},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        )
-
-
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
-def sync_user_from_clerk(request):
-    """
-    Manually sync user data from Clerk
-    POST /api/user/sync/
-
-    This endpoint forces a sync of user data from Clerk
-    Useful after user updates their profile in Clerk
-
-    Returns:
-        200: Sync successful
-    """
-    try:
-        # The authentication already synced the user
-        # But we can force another update if needed
-        user = request.user
-
-        # You can add additional sync logic here if needed
-        # For now, just return the current user data
-
-        serializer = UserProfileSerializer(user)
-
-        return Response(
-            {
-                "success": True,
-                "message": "User data synced successfully",
-                "data": serializer.data,
-            },
-            status=status.HTTP_200_OK,
-        )
-
-    except Exception as e:
-        logger.error(f"Error syncing user: {str(e)}", exc_info=True)
-        return Response(
-            {"success": False, "error": "Failed to sync user data"},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        )
-
-
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
-def update_last_sign_in(request):
-    """
-    Update user's last sign-in timestamp
-    POST /api/user/signin/
-
-    Call this from your React app after successful sign-in
-
-    Returns:
-        200: Timestamp updated
-    """
-    try:
-        user = request.user
-        user.update_last_sign_in()
-
-        return Response(
-            {
-                "success": True,
-                "message": "Last sign-in updated",
-                "last_sign_in": user.last_sign_in.isoformat(),
-            },
-            status=status.HTTP_200_OK,
-        )
-
-    except Exception as e:
-        logger.error(f"Error updating last sign-in: {str(e)}")
-        return Response(
-            {"success": False, "error": "Failed to update last sign-in"},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        )
+    # Return validation errors
+    return Response(
+        {"success": False, "errors": serializer.errors},
+        status=status.HTTP_400_BAD_REQUEST,
+    )
 
 
 @api_view(["GET"])
 @permission_classes([AllowAny])
-def get_user_public_profile(request, user_id):
+def health_check(request):
+    """Simple health check endpoint"""
+    return Response({"status": "ok", "message": "Contact API is running"})
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def test_email(request):
     """
-    Get public profile of any user
-    GET /api/users/{user_id}/
+    Test email configuration
 
-    This endpoint doesn't require authentication
-    Returns limited public information (id, first_name, last_name, full_name)
-
-    Returns:
-        200: Public user profile
-        404: User not found
-    """
-    try:
-        user = UserProfile.objects.get(id=user_id, is_active=True)
-        serializer = UserProfilePublicSerializer(user)
-        return Response(
-            {"success": True, "data": serializer.data}, status=status.HTTP_200_OK
-        )
-    except UserProfile.DoesNotExist:
-        return Response(
-            {"success": False, "error": "User not found"},
-            status=status.HTTP_404_NOT_FOUND,
-        )
-    except Exception as e:
-        logger.error(f"Error fetching public profile: {str(e)}")
-        return Response(
-            {"success": False, "error": "Failed to fetch user profile"},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        )
-
-
-@api_view(["DELETE"])
-@permission_classes([IsAuthenticated])
-def delete_user_account(request):
-    """
-    Delete user account (soft delete - marks as inactive)
-    DELETE /api/user/me/
-
-    Note: This doesn't delete the user from Clerk
-    You should also call Clerk's API to delete the user there
-
-    Returns:
-        200: Account deleted
+    POST /api/contact/test-email/
     """
     try:
-        user = request.user
+        from django.core.mail import send_mail
+        from django.conf import settings
 
-        # Soft delete - just mark as inactive
-        user.is_active = False
-        user.save()
-
-        logger.info(f"User account deleted: {user.email}")
+        send_mail(
+            subject="Test Email from Nexxa Auto Parts",
+            message="This is a test email to verify your email configuration is working correctly.",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=settings.CONTACT_EMAIL_RECIPIENTS,
+            fail_silently=False,
+        )
 
         return Response(
-            {"success": True, "message": "Account deleted successfully"},
-            status=status.HTTP_200_OK,
+            {
+                "success": True,
+                "message": "Test email sent successfully! Check your inbox.",
+            }
         )
 
     except Exception as e:
-        logger.error(f"Error deleting account: {str(e)}")
+        logger.error(f"Test email failed: {str(e)}", exc_info=True)
         return Response(
-            {"success": False, "error": "Failed to delete account"},
+            {"success": False, "error": str(e)},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
-
-
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def test_protected_route(request):
-    """
-    Test endpoint to verify authentication is working
-    GET /api/protected/test/
-
-    Returns:
-        200: Authentication successful with user info
-    """
-    return Response(
-        {
-            "success": True,
-            "message": "You are authenticated!",
-            "user": {
-                "id": request.user.id,
-                "clerk_id": request.user.clerk_id,
-                "email": request.user.email,
-                "first_name": request.user.first_name,
-                "last_name": request.user.last_name,
-                "full_name": request.user.get_full_name(),
-            },
-            "timestamp": timezone.now().isoformat(),
-        },
-        status=status.HTTP_200_OK,
-    )
