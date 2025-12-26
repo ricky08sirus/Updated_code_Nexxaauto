@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./Contact.css";
 import {
+  FaCheckCircle,
   FaEnvelope,
-  FaPhoneAlt,
+  FaExclamationCircle,
   FaGlobe,
   FaMapMarkerAlt,
-  FaCheckCircle,
-  FaExclamationCircle,
+  FaPhoneAlt,
 } from "react-icons/fa";
 
 const Contact = () => {
@@ -59,7 +59,7 @@ const Contact = () => {
 
     try {
       const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
-      
+
       const response = await fetch(`${API_URL}/api/contact/`, {
         method: "POST",
         headers: {
@@ -77,7 +77,7 @@ const Contact = () => {
 
       if (response.ok && data.success) {
         setShowSuccessAnimation(true);
-        
+
         setStatus({
           type: "success",
           message:
@@ -113,8 +113,7 @@ const Contact = () => {
       console.error("Error submitting form:", error);
       setStatus({
         type: "error",
-        message:
-          "Network error. Please check your connection and try again.",
+        message: "Network error. Please check your connection and try again.",
       });
     } finally {
       setIsSubmitting(false);
@@ -126,11 +125,25 @@ const Contact = () => {
       {showSuccessAnimation && (
         <div className="success-overlay">
           <div className="success-animation">
-            <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-              <circle className="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
-              <path className="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            <svg
+              className="checkmark"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 52 52"
+            >
+              <circle
+                className="checkmark-circle"
+                cx="26"
+                cy="26"
+                r="25"
+                fill="none"
+              />
+              <path
+                className="checkmark-check"
+                fill="none"
+                d="M14.1 27.2l7.1 7.2 16.7-16.8"
+              />
             </svg>
-            <p className="success-text">Message Sent Successfully!</p>
+            <p className="success-text">We will get back to you !</p>
           </div>
         </div>
       )}
@@ -144,7 +157,8 @@ const Contact = () => {
           <p>
             We're proud to serve customers nationwide with top-quality
             second-hand car parts, trusted by thousands of mechanics and vehicle
-            owners. Contact us for genuine OEM replacements at affordable prices.
+            owners. Contact us for genuine OEM replacements at affordable
+            prices.
           </p>
 
           <div className="contact-box">
@@ -193,11 +207,9 @@ const Contact = () => {
 
             {status.message && (
               <div className={`status-message ${status.type}`}>
-                {status.type === "success" ? (
-                  <FaCheckCircle className="status-icon" />
-                ) : (
-                  <FaExclamationCircle className="status-icon" />
-                )}
+                {status.type === "success"
+                  ? <FaCheckCircle className="status-icon" />
+                  : <FaExclamationCircle className="status-icon" />}
                 <span>{status.message}</span>
               </div>
             )}
@@ -239,7 +251,8 @@ const Contact = () => {
               value={formData.message}
               onChange={handleChange}
               required
-            ></textarea>
+            >
+            </textarea>
 
             <div className="checkbox">
               <input
@@ -249,12 +262,16 @@ const Contact = () => {
                 onChange={handleChange}
               />
               <label>
-                By checking this box, you agree to receive customer care, account
-                notifications and delivery notification SMS messages.
+                By checking this box, you agree to receive customer care,
+                account notifications and delivery notification SMS messages.
               </label>
             </div>
 
-            <button type="button" onClick={handleSubmit} disabled={isSubmitting}>
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+            >
               {isSubmitting ? "Sending..." : "Submit"}
             </button>
           </div>
