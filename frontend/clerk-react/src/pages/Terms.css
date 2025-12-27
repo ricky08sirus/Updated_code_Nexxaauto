@@ -1,0 +1,62 @@
+.terms-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  line-height: 1.7;
+}
+
+.main-heading {
+  color: red;
+  font-size: 2rem;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.sub-heading {
+  color: #333;
+  font-size: 1.4rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.paragraph a{
+    text-decoration: underline;;
+}
+.paragraph {
+  font-size: 21px;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .main-heading {
+    font-size: 1.6rem;
+  }
+
+  .sub-heading {
+    font-size: 1.2rem;
+  }
+
+  .paragraph {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .terms-container {
+    padding: 15px;
+  }
+
+  .main-heading {
+    font-size: 1.4rem;
+  }
+
+  .sub-heading {
+    font-size: 1.1rem;
+  }
+
+  .paragraph {
+    font-size: 0.9rem;
+  }
+}

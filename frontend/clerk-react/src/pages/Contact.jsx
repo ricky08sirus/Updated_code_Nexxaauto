@@ -15,7 +15,7 @@ const Contact = () => {
     email: "",
     subject: "",
     message: "",
-    agreeToSMS: false,
+    smsConsent: false, // ✅ added correctly
   });
 
   const [status, setStatus] = useState({
@@ -48,13 +48,25 @@ const Contact = () => {
       return;
     }
 
+    if (!formData.smsConsent) {
+      setStatus({
+        type: "error",
+        message: "Please agree to the SMS consent to continue.",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
+      // ❌ do NOT send smsConsent to backend
+      const { smsConsent, ...payload } = formData;
 
       const response = await fetch(`${API_URL}/api/contact/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
@@ -71,7 +83,7 @@ const Contact = () => {
           email: "",
           subject: "",
           message: "",
-          agreeToSMS: false,
+          smsConsent: false, // ✅ reset correctly
         });
 
         setTimeout(() => setShowSuccessAnimation(false), 3000);
@@ -79,7 +91,10 @@ const Contact = () => {
       } else {
         setStatus({
           type: "error",
-          message: data.error || "Failed to send message",
+          message:
+            data.error ||
+            Object.values(data.errors || {}).flat().join(", ") ||
+            "Failed to send message",
         });
       }
     } catch {
@@ -145,7 +160,7 @@ const Contact = () => {
         {/* RIGHT SECTION */}
         <div className="contact-right">
           <div className="contact-form">
-            <h3>Get in Touch</h3>
+            <h3>Get in Touch with Nexxa Auto Parts</h3>
 
             {status.message && (
               <div className={`status-message ${status.type}`}>
@@ -175,7 +190,11 @@ const Contact = () => {
               required
             />
 
-            <select name="subject" value={formData.subject} onChange={handleChange}>
+            <select
+              name="subject"
+              value={formData.subject}
+              onChange={handleChange}
+            >
               <option value="">Subject</option>
               <option value="General Inquiry">General Inquiry</option>
               <option value="Parts Request">Parts Request</option>
@@ -189,6 +208,33 @@ const Contact = () => {
               onChange={handleChange}
               required
             />
+
+            {/* SMS CONSENT */}
+            <div className="sms-consent">
+              <label>
+                <input
+                  type="checkbox"
+                  name="smsConsent"
+                  checked={formData.smsConsent}
+                  onChange={handleChange}
+                />
+                <span>
+                  By checking this box, you agree to receive customer care,
+                  account notifications and delivery notification SMS messages
+                  from <strong>NEXXA AUTO PARTS</strong>. You may reply{" "}
+                  <strong>STOP</strong> to opt-out at any time. Reply{" "}
+                  <strong>HELP</strong> to (463) 223-5914. Messages and data rates
+                  may apply. Learn more on our{" "}
+                  <a href="/privacy-policy" target="_blank">
+                    Privacy Policy
+                  </a>{" "}
+                  and{" "}
+                  <a href="/terms-and-conditions" target="_blank">
+                    Terms & Conditions
+                  </a>.
+                </span>
+              </label>
+            </div>
 
             <button onClick={handleSubmit} disabled={isSubmitting}>
               {isSubmitting ? "Sending..." : "Submit"}

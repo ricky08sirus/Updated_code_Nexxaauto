@@ -1,11 +1,11 @@
 import React from "react";
 import "./Home.css";
 import bannerImage from "../assets/images/banner-img.webp";
-import sectionImage from "../assets/images/group-104.svg";
-import img1 from "../assets/images/group-193.svg";
-import img2 from "../assets/images/low-milage.svg";
-import img3 from "../assets/images/national-wide.svg";
-import img4 from "../assets/images/win.svg";
+import ctaImage from "../assets/images/group-104.svg";
+// import img1 from "../assets/images/group-193.svg";
+// import img2 from "../assets/images/low-milage.svg";
+// import img3 from "../assets/images/national-wide.svg";
+// import img4 from "../assets/images/win.svg";
 import part1 from "../assets/images/Anti Brake Module-Pump.webp";
 import part2 from "../assets/images/Radio controller- Display.webp";
 import part3 from "../assets/images/Display.webp";
@@ -16,7 +16,16 @@ import part7 from "../assets/images/Engine Computers.webp";
 import part8 from "../assets/images/Engine.webp";
 import part9 from "../assets/images/Engines.webp";
 import part10 from "../assets/images/Rims.webp";
+// branda section image
+import brand1 from "../assets/images/brands/Group 50.png";
+import brand2 from "../assets/images/brands/Group 52.png";
+import brand3 from "../assets/images/brands/Group 53.png";
+import brand4 from "../assets/images/brands/Group 54.png";
+import brand5 from "../assets/images/brands/Group 55.png";
+
 import { ChevronLeft, ChevronRight } from "lucide-react";
+
+const brands = [brand1, brand2, brand3, brand4, brand5];
 
 // Manufacturer-Model mapping
 const vehicleData = {
@@ -161,10 +170,10 @@ const Home = () => {
           <h3 className="why-title">Why Nexxa Auto Parts</h3>
 
           <div className="why-boxes">
-            <div className="why-box"><img src={img1} alt="Support" /><span>Free expert support</span></div>
-            <div className="why-box"><img src={img2} alt="Mileage" /><span>Low mileage parts</span></div>
-            <div className="why-box"><img src={img3} alt="Shipping" /><span>Nationwide shipping</span></div>
-            <div className="why-box"><img src={img4} alt="VIN" /><span>VIN-matched parts</span></div>
+            <div className="why-box"><span>Free expert support</span></div>
+            <div className="why-box"><span>Low mileage parts</span></div>
+            <div className="why-box"><span>Nationwide shipping</span></div>
+            <div className="why-box"><span>VIN-matched parts</span></div>
           </div>
         </div>
       </section>
@@ -226,10 +235,34 @@ const Home = () => {
             <button className="cta-btn">Start Your Search</button>
           </div>
           <div className="cta-right">
-            <img src={bannerImage} alt="Auto Parts" />
+            <img src={ctaImage} alt="Auto Parts" />
           </div>
         </div>
       </section>
+{/* brand section */}
+{/* Brands Section */}
+<section className="brands-section">
+  <h2>Brands we carry</h2>
+  <p>We stock parts for all major automatiive brands</p>
+  <div className="brands-marquee">
+    <div className="brands-track">
+      {brands.map((brand, idx) => (
+        <div className="brand-card" key={idx}>
+          <img src={brand} alt={`Brand ${idx + 1}`} />
+        </div>
+      ))}
+      {/* Repeat once for smooth infinite scroll */}
+      {brands.map((brand, idx) => (
+        <div className="brand-card" key={`dup-${idx}`}>
+          <img src={brand} alt={`Brand ${idx + 1}`} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+
+
     </div>
   );
 };

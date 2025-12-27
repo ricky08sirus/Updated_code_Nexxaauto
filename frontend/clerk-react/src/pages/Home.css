@@ -752,63 +752,42 @@ background: #be0808;
 
 
 
-/* brand section */
-/* =========================
-   Brands Section
-========================= */
-
 .brands-section {
-  padding: 60px 20px;
-  background: #fff;
-  overflow: hidden;
+  padding: 40px 0;
+  background-color: #f8f8f8;
+  text-align: center;
 }
 
 .brands-section h2 {
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 32px;
+  /* margin-bottom: 30px; */
+  font-size: 2rem;
 }
 
-/* Slider */
-.brands-slider {
+.brands-marquee {
   overflow: hidden;
+  width: 100%;
 }
 
 .brands-track {
   display: flex;
-  gap: 40px;
-  width: max-content;
-  animation: scrollBrands 25s linear infinite;
+  white-space: nowrap;
+  animation: scrollInfinite 25s linear infinite;
 }
 
-/* Brand Card */
 .brand-card {
-  min-width: 140px;
-  height: 80px;
-  background: #fff;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  flex: 0 0 auto;
+  width: 150px;
+  margin: 0 15px;
 }
 
 .brand-card img {
-  max-width: 100px;
-  max-height: 50px;
+  width: 100%;
+  height: auto;
   object-fit: contain;
-  filter: grayscale(100%);
-  transition: all 0.3s ease;
 }
 
-/* Hover Effect */
-.brand-card:hover img {
-  filter: grayscale(0%);
-  transform: scale(1.05);
-}
-
-/* Infinite Scroll Animation */
-@keyframes scrollBrands {
+/* Infinite scroll animation */
+@keyframes scrollInfinite {
   0% {
     transform: translateX(0);
   }
@@ -817,24 +796,17 @@ background: #be0808;
   }
 }
 
-/* =========================
-   Responsive
-========================= */
-
-/* Mobile */
-@media (max-width: 480px) {
-  .brands-section h2 {
-    font-size: 22px;
-  }
-
+/* Responsive */
+@media (max-width: 768px) {
   .brand-card {
-    min-width: 110px;
-    height: 70px;
-  }
-
-  .brand-card img {
-    max-width: 80px;
+    width: 120px;
+    /* margin: 0 10px; */
   }
 }
 
-/* ====================================================================== */
+@media (max-width: 480px) {
+  .brand-card {
+    width: 90px;
+    margin: 0 5px;
+  }
+}

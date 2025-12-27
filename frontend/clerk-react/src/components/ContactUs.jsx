@@ -95,7 +95,7 @@ export default function ContactUs() {
               <span className="text-green-600 text-2xl mr-3">✓</span>
               <div>
                 <h3 className="text-green-900 font-semibold">
-                  Message Sent Successfully!
+                  Thankyou for Contacting Us!
                 </h3>
                 <p className="text-green-700 text-sm">
                   Thank you for contacting us. We'll get back to you within

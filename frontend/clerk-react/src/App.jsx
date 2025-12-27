@@ -6,6 +6,9 @@ import Contact from "./pages/Contact";
 import Footer from "./components/Footer";
 import Privacypolicy from "./pages/Privacypolicy";
 import ProductDetails from "./pages/ProductDetails";
+import Warranty from "./pages/Warranty";
+import Terms from "./pages/Terms";
+
 
 
 
@@ -22,6 +25,9 @@ function App() {
                 <Route path="/contact-us" element={<Contact />} />
         <Route path="/privacy-policy" element={<Privacypolicy />} />
         <Route path="/product-details" element={<ProductDetails />} />
+        <Route path="/warranty" element={<Warranty />} />
+                <Route path="/terms-and-conditions" element={<Terms />} />
+
 
       </Routes>
        <Footer />
