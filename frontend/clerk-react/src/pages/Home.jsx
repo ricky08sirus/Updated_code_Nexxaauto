@@ -22,10 +22,16 @@ import brand2 from "../assets/images/brands/Group 52.png";
 import brand3 from "../assets/images/brands/Group 53.png";
 import brand4 from "../assets/images/brands/Group 54.png";
 import brand5 from "../assets/images/brands/Group 55.png";
+import brand6 from "../assets/images/brands/Group 56.png";
+import brand7 from "../assets/images/brands/Group 57.png";
+import brand8 from "../assets/images/brands/Group 58.png";
+import brand9 from "../assets/images/brands/Group 59.png";
+import brand10 from "../assets/images/brands/Group 60.png";
+import brand11 from "../assets/images/brands/Group 61.png";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const brands = [brand1, brand2, brand3, brand4, brand5];
+const brands = [brand1, brand2, brand3, brand4, brand5,brand6,brand7, brand8,brand9,brand10, brand11];
 
 // Manufacturer-Model mapping
 const vehicleData = {
@@ -227,7 +233,7 @@ const Home = () => {
       </section>
 
       {/* Call To Action Section */}
-      <section className="cta-section">
+      {/* <section className="cta-section">
         <div className="cta-container">
           <div className="cta-left">
             <h2>Ready to Find Your Part</h2>
@@ -238,7 +244,7 @@ const Home = () => {
             <img src={ctaImage} alt="Auto Parts" />
           </div>
         </div>
-      </section>
+      </section> */}
 {/* brand section */}
 {/* Brands Section */}
 <section className="brands-section">

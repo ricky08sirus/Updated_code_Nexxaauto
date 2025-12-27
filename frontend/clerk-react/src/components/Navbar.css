@@ -1,0 +1,41 @@
+.scroll-container {
+  border: 2px solid red;       /* Red border */
+  background: black;           /* Black background */
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
+  box-sizing: border-box;
+  padding: 10px 0;
+  position: relative;
+}
+
+.scrolling-text {
+  display: inline-flex;
+  min-width: 200%;
+  animation: scroll 20s linear infinite;
+}
+
+.scroll-item {
+  margin: 0 10px;
+  padding: 8px 20px;
+  background: #1f1f1f;         /* Slightly lighter black box */
+  border-radius: 8px;           /* Rounded corners */
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.scroll-item:hover {
+  color: red;
+  background: #2a2a2a;          /* Hover slightly lighter */
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

@@ -3,6 +3,8 @@ import { SignedIn, SignedOut, useClerk, UserButton } from "@clerk/clerk-react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import logoImage from "../assets/images/logoimg-removebg-preview.png";
+import "./navbar.css"; 
+
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -100,17 +102,34 @@ export default function Navbar() {
         )}
       </nav>
 
-      {/* Secondary Nav (unchanged) */}
-      <div className="bg-gray-900 text-white py-3 overflow-x-auto">
-        <div className="max-w-full mx-auto px-8">
-          <div className="flex items-center space-x-6 text-sm whitespace-nowrap">
-            <span className="hover:text-red-600">Used Kia Parts</span>
-            <span className="hover:text-red-600">Used Porsche Parts</span>
-            <span className="hover:text-red-600">Used BMW Parts</span>
-            <span className="hover:text-red-600">Used Mercedes Parts</span>
-          </div>
-        </div>
-      </div>
+{/* Secondary Nav with continuous scroll inside rectangle */}
+<div className="scroll-container">
+  <div className="scrolling-text">
+    {[
+      "Used Kia Parts",
+      "Used Porsche Parts",
+      "Used BMW Parts",
+      "Used Mercedes Parts",
+    ].map((item, index) => (
+      <span key={index} className="scroll-item">
+        {item}
+      </span>
+    ))}
+    {/* Repeat items to make seamless loop */}
+    {[
+      "Used Kia Parts",
+      "Used Porsche Parts",
+      "Used BMW Parts",
+      "Used Mercedes Parts",
+    ].map((item, index) => (
+      <span key={"r" + index} className="scroll-item">
+        {item}
+      </span>
+    ))}
+  </div>
+</div>
+
+
     </div>
   );
 }

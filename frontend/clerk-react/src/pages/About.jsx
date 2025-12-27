@@ -1,7 +1,7 @@
 import React from "react";
 import "./About.css";
-import aboutImg1 from "../assets/images/banner-img.webp";
-import aboutImg2 from "../assets/images/banner-img.webp";
+import aboutImg1 from "../assets/images/aboutimg1.png";
+import aboutImg2 from "../assets/images/boutimg2.png";
 
 const About = () => {
   return (
