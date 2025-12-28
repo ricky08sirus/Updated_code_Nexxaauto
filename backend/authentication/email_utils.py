@@ -236,33 +236,26 @@ This is an automated confirmation email.
         return False
 
 
-
-
-
-
-
-# Add these functions to your existing authentication/email_utils.py file
-
 def send_parts_inquiry_notification(inquiry):
     """
     Send email notification to company when parts inquiry is submitted
-    
+
     Args:
         inquiry: PartsInquiry instance
     """
     try:
         # Email subject
         subject = f"New Parts Request - {inquiry.year} {inquiry.manufacturer.name} {inquiry.model.name}"
-        
+
         # Create HTML email body with premium design
         html_content = f"""
         <!DOCTYPE html>
         <html>
         <head>
             <style>
-                body {{ 
-                    font-family: 'Helvetica Neue', Arial, sans-serif; 
-                    line-height: 1.6; 
+                body {{
+                    font-family: 'Helvetica Neue', Arial, sans-serif;
+                    line-height: 1.6;
                     color: #2c3e50;
                     background-color: #f4f6f9;
                     margin: 0;
@@ -276,21 +269,12 @@ def send_parts_inquiry_notification(inquiry):
                     overflow: hidden;
                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                 }}
-                .header {{ 
+                .header {{
                     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                     color: white;
                     padding: 40px 30px;
                     text-align: center;
                     position: relative;
-                }}
-                .header::after {{
-                    content: '';
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    height: 4px;
-                    background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
                 }}
                 .header h1 {{
                     margin: 0 0 10px 0;
@@ -303,7 +287,7 @@ def send_parts_inquiry_notification(inquiry):
                     font-size: 16px;
                     opacity: 0.95;
                 }}
-                .content {{ 
+                .content {{
                     padding: 35px 30px;
                 }}
                 .vehicle-banner {{
@@ -355,26 +339,12 @@ def send_parts_inquiry_notification(inquiry):
                     display: flex;
                     align-items: center;
                 }}
-                .section-title::before {{
-                    content: '';
-                    width: 4px;
-                    height: 16px;
-                    background: #667eea;
-                    margin-right: 10px;
-                    border-radius: 2px;
-                }}
                 .info-card {{
                     background: #f8f9fa;
                     padding: 15px 20px;
                     border-radius: 8px;
                     margin-bottom: 12px;
                     border: 1px solid #e9ecef;
-                    transition: all 0.3s ease;
-                }}
-                .info-card:hover {{
-                    border-color: #667eea;
-                    transform: translateY(-2px);
-                    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.1);
                 }}
                 .info-label {{
                     font-size: 13px;
@@ -403,23 +373,7 @@ def send_parts_inquiry_notification(inquiry):
                     letter-spacing: 0.5px;
                     margin-top: 20px;
                 }}
-                .action-button {{
-                    display: inline-block;
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                    color: white;
-                    padding: 14px 30px;
-                    text-decoration: none;
-                    border-radius: 8px;
-                    font-weight: 600;
-                    margin-top: 20px;
-                    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-                    transition: all 0.3s ease;
-                }}
-                .action-button:hover {{
-                    transform: translateY(-2px);
-                    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
-                }}
-                .footer {{ 
+                .footer {{
                     background: #f8f9fa;
                     text-align: center;
                     padding: 25px;
@@ -474,7 +428,7 @@ def send_parts_inquiry_notification(inquiry):
 
                     <div class="section">
                         <div class="section-title">Customer Information</div>
-                        
+
                         <div class="info-card">
                             <div class="info-label"><span class="icon">👤</span>Name</div>
                             <div class="info-value">{inquiry.name}</div>
@@ -509,7 +463,7 @@ def send_parts_inquiry_notification(inquiry):
 
                     <div class="section">
                         <div class="section-title">Request Details</div>
-                        
+
                         <div class="info-card">
                             <div class="info-label"><span class="icon">🕐</span>Submitted</div>
                             <div class="info-value">{inquiry.created_at.strftime("%B %d, %Y at %I:%M %p")}</div>
@@ -538,40 +492,46 @@ def send_parts_inquiry_notification(inquiry):
         </body>
         </html>
         """
+
+        # Plain text version (fallback) - Fixed backslash issue
+        additional_notes_section = ""
+        if inquiry.additional_notes:
+            additional_notes_section = f"""
+ADDITIONAL NOTES
+===========================================
+{inquiry.additional_notes}
+
+"""
         
-        # Plain text version (fallback)
         text_content = f"""
 New Parts Request - Nexxa Auto Parts
 
 VEHICLE INFORMATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+===========================================
 Year: {inquiry.year}
 Manufacturer: {inquiry.manufacturer.name}
 Model: {inquiry.model.name}
 Part Needed: {inquiry.part_category.name}
 
 CUSTOMER INFORMATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+===========================================
 Name: {inquiry.name}
 Email: {inquiry.email}
 Phone: {inquiry.phone}
 ZIP Code: {inquiry.zipcode}
 
-{f"ADDITIONAL NOTES\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n{inquiry.additional_notes}\\n\\n" if inquiry.additional_notes else ""}REQUEST DETAILS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{additional_notes_section}REQUEST DETAILS
+===========================================
 Submitted: {inquiry.created_at.strftime("%B %d, %Y at %I:%M %p")}
 IP Address: {inquiry.ip_address or "Unknown"}
 Request ID: {inquiry.id}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+===========================================
 Please respond to: {inquiry.email}
 Reference: {str(inquiry.id)[:8].upper()}
         """
-        
+
         # Create email with both HTML and text versions
-        from django.core.mail import EmailMultiAlternatives
-        from django.conf import settings
-        
         email = EmailMultiAlternatives(
             subject=subject,
             body=text_content,
@@ -579,39 +539,38 @@ Reference: {str(inquiry.id)[:8].upper()}
             to=settings.CONTACT_EMAIL_RECIPIENTS,
             reply_to=[inquiry.email],
         )
-        
+
         # Attach HTML version
         email.attach_alternative(html_content, "text/html")
-        
+
         # Send email
         email.send(fail_silently=False)
-        
+
         logger.info(f"Parts inquiry notification sent for {inquiry.id}")
         return True
-        
+
     except Exception as e:
         logger.error(f"Failed to send parts inquiry notification: {str(e)}", exc_info=True)
         return False
 
-
 def send_parts_inquiry_auto_reply(inquiry):
     """
     Send automatic reply to customer confirming receipt of their parts request
-    
+
     Args:
         inquiry: PartsInquiry instance
     """
     try:
         subject = "We're Finding Your Parts - Nexxa Auto Parts"
-        
+
         html_content = f"""
         <!DOCTYPE html>
         <html>
         <head>
             <style>
-                body {{ 
-                    font-family: 'Helvetica Neue', Arial, sans-serif; 
-                    line-height: 1.6; 
+                body {{
+                    font-family: 'Helvetica Neue', Arial, sans-serif;
+                    line-height: 1.6;
                     color: #2c3e50;
                     background-color: #f4f6f9;
                     margin: 0;
@@ -625,7 +584,7 @@ def send_parts_inquiry_auto_reply(inquiry):
                     overflow: hidden;
                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                 }}
-                .header {{ 
+                .header {{
                     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                     color: white;
                     padding: 50px 30px;
@@ -641,7 +600,7 @@ def send_parts_inquiry_auto_reply(inquiry):
                     font-size: 16px;
                     opacity: 0.95;
                 }}
-                .content {{ 
+                .content {{
                     padding: 40px 35px;
                 }}
                 .content p {{
@@ -719,7 +678,7 @@ def send_parts_inquiry_auto_reply(inquiry):
                     color: #6c757d;
                     font-weight: 500;
                 }}
-                .footer {{ 
+                .footer {{
                     background: #f8f9fa;
                     text-align: center;
                     padding: 30px;
@@ -729,17 +688,6 @@ def send_parts_inquiry_auto_reply(inquiry):
                     margin: 5px 0;
                     color: #6c757d;
                     font-size: 13px;
-                }}
-                .cta-button {{
-                    display: inline-block;
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                    color: white;
-                    padding: 15px 35px;
-                    text-decoration: none;
-                    border-radius: 8px;
-                    font-weight: 600;
-                    margin-top: 20px;
-                    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
                 }}
             </style>
         </head>
@@ -822,7 +770,7 @@ def send_parts_inquiry_auto_reply(inquiry):
         </body>
         </html>
         """
-        
+
         text_content = f"""
 ✅ Request Received - Nexxa Auto Parts
 
@@ -831,23 +779,23 @@ Hi {inquiry.name},
 Thank you for choosing Nexxa Auto Parts! We've received your parts request and our team is already working on finding the perfect match for your vehicle.
 
 YOUR REQUEST SUMMARY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+===========================================
 Vehicle: {inquiry.year} {inquiry.manufacturer.name} {inquiry.model.name}
 Part Requested: {inquiry.part_category.name}
 Submitted: {inquiry.created_at.strftime("%B %d, %Y")}
 
 YOUR REFERENCE NUMBER
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+===========================================
 {str(inquiry.id)[:8].upper()}
 (Please save this for future reference)
 
 WHAT HAPPENS NEXT?
 Our parts specialists will check availability and pricing for your {inquiry.year} {inquiry.manufacturer.name} {inquiry.model.name}. We'll send you a detailed quote with:
 
-• Part availability and condition
-• Competitive pricing
-• Shipping options and costs
-• Estimated delivery time
+- Part availability and condition
+- Competitive pricing
+- Shipping options and costs
+- Estimated delivery time
 
 We typically respond within 24-48 hours during business days.
 
@@ -856,27 +804,24 @@ Need to add something or have questions? Just reply to this email!
 Best regards,
 The Nexxa Auto Parts Team
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+===========================================
 This is an automated confirmation email.
 © 2024 Nexxa Auto Parts. All rights reserved.
         """
-        
-        from django.core.mail import EmailMultiAlternatives
-        from django.conf import settings
-        
+
         email = EmailMultiAlternatives(
             subject=subject,
             body=text_content,
             from_email=settings.DEFAULT_FROM_EMAIL,
             to=[inquiry.email],
         )
-        
+
         email.attach_alternative(html_content, "text/html")
         email.send(fail_silently=False)
-        
+
         logger.info(f"Auto-reply sent to {inquiry.email}")
         return True
-        
+
     except Exception as e:
         logger.error(f"Failed to send auto-reply: {str(e)}", exc_info=True)
         return False
@@ -884,6 +829,196 @@ This is an automated confirmation email.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
 
 
 
