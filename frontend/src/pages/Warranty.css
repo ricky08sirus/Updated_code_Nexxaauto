@@ -1,3 +1,9 @@
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 .warranty-page {
   padding: 60px 20px;
   background: #fff;
@@ -6,17 +12,18 @@
 }
 
 .warranty-wrapper {
-  max-width: 900px;
+  /* max-width: 900px; */
+  padding: 26px 93px;
   margin: auto;
   padding: 20px;
 }
 
 .warranty-wrapper h1 {
-  font-size: 36px;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 40px;
-  color: red;
+    font-size: 40px;
+    margin-bottom: 30px;
+    color: red;
+    font-weight: 500;
+    text-shadow: 1px 2px 5px black;
 }
 
 .warranty-section {

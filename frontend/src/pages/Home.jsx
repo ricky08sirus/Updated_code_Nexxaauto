@@ -1,35 +1,3 @@
-// import React from "react";
-// import "./Home.css";
-// import bannerImage from "../assets/images/banner-img.webp";
-// import ctaImage from "../assets/images/group-104.svg";
-// // import img1 from "../assets/images/group-193.svg";
-// // import img2 from "../assets/images/low-milage.svg";
-// // import img3 from "../assets/images/national-wide.svg";
-// // import img4 from "../assets/images/win.svg";
-// import part1 from "../assets/images/Anti Brake Module-Pump.webp";
-// import part2 from "../assets/images/Radio controller- Display.webp";
-// import part3 from "../assets/images/Display.webp";
-// import part4 from "../assets/images/Mechanical Parts.webp";
-// import part5 from "../assets/images/Body Parts.webp";
-// import part6 from "../assets/images/transmission.webp";
-// import part7 from "../assets/images/Engine Computers.webp";
-// import part8 from "../assets/images/Engine.webp";
-// import part9 from "../assets/images/Engines.webp";
-// import part10 from "../assets/images/Rims.webp";
-// // branda section image
-// import brand1 from "../assets/images/brands/Group 50.png";
-// import brand2 from "../assets/images/brands/Group 52.png";
-// import brand3 from "../assets/images/brands/Group 53.png";
-// import brand4 from "../assets/images/brands/Group 54.png";
-// import brand5 from "../assets/images/brands/Group 55.png";
-// import brand6 from "../assets/images/brands/Group 56.png";
-// import brand7 from "../assets/images/brands/Group 57.png";
-// import brand8 from "../assets/images/brands/Group 58.png";
-// import brand9 from "../assets/images/brands/Group 59.png";
-// import brand10 from "../assets/images/brands/Group 60.png";
-// import brand11 from "../assets/images/brands/Group 61.png";
-
-// Home.jsx - Backend Integrated Version
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
@@ -43,7 +11,7 @@ import part4 from "../assets/images/Mechanical Parts.webp";
 import part5 from "../assets/images/Body Parts.webp";
 import part6 from "../assets/images/transmission.webp";
 import part7 from "../assets/images/Engine Computers.webp";
-import part8 from "../assets/images/Engine.webp";
+// import part8 from "../assets/images/Engine.webp";
 import part9 from "../assets/images/Engines.webp";
 import part10 from "../assets/images/Rims.webp";
 
@@ -60,6 +28,12 @@ import brand9 from "../assets/images/brands/Group 59.png";
 import brand10 from "../assets/images/brands/Group 60.png";
 import brand11 from "../assets/images/brands/Group 61.png";
 
+
+// why nexxa images
+import headset from "../assets/images/icons/Headset.svg";
+import lowMileage from "../assets/images/icons/Tumble Dry Low Heat.svg";
+import delivery from "../assets/images/icons/Document Delivery.svg";
+import radiator from "../assets/images/icons/Car Radiator.svg";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // API Configuration
@@ -68,18 +42,20 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 console.log("API Base URL:", API_BASE_URL);
 
 // Parts images array
+// Parts images array with names
 const partsImages = [
-  part1,
-  part2,
-  part3,
-  part4,
-  part5,
-  part6,
-  part7,
-  part8,
-  part9,
-  part10,
+  { img: part1, name: "Anti Brake Module Pump" },
+  { img: part2, name: "Radio Controller Display" },
+  { img: part3, name: "Display Unit" },
+  { img: part4, name: "Mechanical Parts" },
+  { img: part5, name: "Body Parts" },
+  { img: part6, name: "Transmission" },
+  { img: part7, name: "Engine Computers" },
+  // { img: part8, name: "Engine" },
+  { img: part9, name: "Engines" },
+  { img: part10, name: "Rims" },
 ];
+
 
 // Brands array
 const brands = [
@@ -285,14 +261,10 @@ const Home = () => {
         <div className="banner-gradient"></div>
 
         <div className="banner-inner">
-          <div className="banner-left">
-            <h1>
-              Millions of <span className="highlight">OEM Parts.</span> <br />
-              Matched to Your Vehicle.
-            </h1>
-            <p>One smart search. Your perfect fit starts here.</p>
+         <div className="banner-left">
+          <h1>Millions of <span className="highlight">OEM Parts.</span> <br />Matched to Your Vehicle.</h1>
+          <p>One smart search. Your perfect fit starts here.</p>
           </div>
-
           <div className="banner-right">
             <div className="banner-form">
               <div className="row">
@@ -380,24 +352,30 @@ const Home = () => {
 
       {/* Why Nexxa Auto Parts Section */}
       <section className="why-nexxa">
-        <div className="why-nexxa-container">
-          <h3 className="why-title">Why Nexxa Auto Parts</h3>
-          <div className="why-boxes">
-            <div className="why-box">
-              <span>Free expert support</span>
-            </div>
-            <div className="why-box">
-              <span>Low mileage parts</span>
-            </div>
-            <div className="why-box">
-              <span>Nationwide shipping</span>
-            </div>
-            <div className="why-box">
-              <span>VIN-matched parts</span>
-            </div>
-          </div>
-        </div>
-      </section>
+  <div className="why-nexxa-container">
+    <h3 className="why-title">Why Nexxa Auto Parts</h3>
+    <div className="why-boxes">
+      <div className="why-box">
+        <img src={headset} alt="Free expert support" />
+        <span>Free expert support</span>
+      </div>
+      <div className="why-box">
+        <img src={lowMileage} alt="Low mileage parts" />
+        <span>Low mileage parts</span>
+      </div>
+      <div className="why-box">
+        <img src={delivery} alt="Nationwide shipping" />
+        <span>Nationwide shipping</span>
+      </div>
+      <div className="why-box">
+        <img src={radiator} alt="VIN-matched parts" />
+        <span>VIN-matched parts</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 
       {/* Explore Our Premium Used Auto Parts */}
       <section className="explore-parts">
@@ -409,11 +387,13 @@ const Home = () => {
             <ChevronLeft />
           </button>
           <div className="cards-container" ref={scrollRef}>
-            {partsImages.map((img, idx) => (
+            {partsImages.map((part, idx) => (
               <div className="part-card" key={idx}>
-                <img src={img} alt={`Part ${idx + 1}`} />
-              </div>
-            ))}
+                <img src={part.img} alt={part.name} />
+                <p className="part-name">{part.name}</p>
+                </div>
+              ))}
+
           </div>
           <button className="scroll-btn right" onClick={() => scroll("right")}>
             <ChevronRight />

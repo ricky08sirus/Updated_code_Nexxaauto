@@ -491,7 +491,7 @@ const ProductDetails = () => {
                 />
               </div>
 
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label htmlFor="additional_notes">
                   Additional Notes (Optional)
                 </label>
@@ -504,7 +504,7 @@ const ProductDetails = () => {
                   rows="4"
                   disabled={submitting}
                 />
-              </div>
+              </div> */}
             </div>
 
             {/* Submit Button */}

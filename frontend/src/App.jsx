@@ -8,6 +8,7 @@ import Privacypolicy from "./pages/Policypage.jsx";
 import ProductDetails from "./pages/ProductDetails";
 import Warranty from "./pages/Warranty";
 import Terms from "./pages/Terms";
+import Landing from "./pages/Landing.jsx"
 
 import { Route, Routes } from "react-router-dom";
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/product-details" element={<ProductDetails />} />
         <Route path="/warranty" element={<Warranty />} />
         <Route path="/terms-and-conditions" element={<Terms />} />
+        <Route path="/landing" element={<Landing />} />
       </Routes>
       <Footer />
     </>

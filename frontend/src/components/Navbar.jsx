@@ -3,6 +3,15 @@ import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import logoImage from "../assets/images/logoimg-removebg-preview.png";
 import "./Navbar.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHome,
+  faInfoCircle,
+  faPhone,
+  faFileShield,
+  faFileContract,
+  faRotateLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -103,43 +112,45 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* ================= MOBILE MENU ================= */}
-        {isMenuOpen && (
-          <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50">
-            <div className="absolute right-0 top-0 h-full w-72 bg-black border-l border-gray-800 p-6">
-              <div className="flex justify-end mb-6">
-                <button
-                  onClick={closeMenu}
-                  className="hover:text-red-600"
-                  aria-label="Close menu"
-                >
-                  <X size={24} />
-                </button>
-              </div>
+ {/* ================= MOBILE MENU ================= */}
+{isMenuOpen && (
+  <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50">
+    <div className="absolute right-0 top-0 h-full w-72 bg-black border-l border-gray-800 p-6">
+      <div className="flex justify-end mb-6">
+        <button
+          onClick={closeMenu}
+          className="hover:text-red-600"
+          aria-label="Close menu"
+        >
+          <X size={24} />
+        </button>
+      </div>
 
-              <nav className="flex flex-col space-y-4 text-lg">
-                <Link to="/" onClick={closeMenu} className="hover:text-red-600">
-                  Home
-                </Link>
-                <Link to="/about" onClick={closeMenu} className="hover:text-red-600">
-                  About Us
-                </Link>
-                <Link to="/contact-us" onClick={closeMenu} className="hover:text-red-600">
-                  Contact
-                </Link>
-                <Link to="/privacy-policy" onClick={closeMenu} className="hover:text-red-600">
-                  Privacy Policy
-                </Link>
-                <Link to="/warranty" onClick={closeMenu} className="hover:text-red-600">
-                  Warranty & Return Policy
-                </Link>
-                <Link to="/terms-and-conditions" onClick={closeMenu} className="hover:text-red-600">
-                  Terms & Conditions
-                </Link>
-              </nav>
-            </div>
-          </div>
-        )}
+      <nav className="flex flex-col space-y-2 text-lg">
+        <Link to="/" onClick={closeMenu}>
+          <FontAwesomeIcon icon={faHome} /> <span>Home</span>
+        </Link>
+        <Link to="/about" onClick={closeMenu}>
+          <FontAwesomeIcon icon={faInfoCircle} /> <span>About Us</span>
+        </Link>
+        <Link to="/contact-us" onClick={closeMenu}>
+          <FontAwesomeIcon icon={faPhone} /> <span>Contact</span>
+        </Link>
+        <Link to="/privacy-policy" onClick={closeMenu}>
+          <FontAwesomeIcon icon={faFileShield} /> <span>Privacy Policy</span>
+        </Link>
+        <Link to="/warranty" onClick={closeMenu}>
+          <FontAwesomeIcon icon={faRotateLeft} /> <span>Warranty & Return</span>
+        </Link>
+        <Link to="/terms-and-conditions" onClick={closeMenu}>
+          <FontAwesomeIcon icon={faFileContract} /> <span>Terms & Conditions</span>
+        </Link>
+      </nav>
+    </div>
+  </div>
+)}
+
+  
       </nav>
     </div>
   );

@@ -1,13 +1,12 @@
 * {
   box-sizing: border-box;
 }
-
+html,
 body {
   overflow-x: hidden;
+  width: 100%;
 }
-html, body {
-  overflow-x: hidden;
-}
+
 .home-container {
   font-family: Arial, sans-serif;
 }
@@ -57,12 +56,18 @@ html, body {
 /* ===================== */
 .banner-left {
   max-width: 600px;
+      margin: auto;
+    text-align: center;
+     overflow: hidden;
 }
 
 .banner-left h1 {
   font-size: 3.2rem;
   font-weight: 800;
   line-height: 1.2;
+    opacity: 0;
+  transform: translateY(-40px);
+  animation: dropIn 1s ease forwards;
 }
 
 .highlight {
@@ -73,8 +78,24 @@ html, body {
   margin-top: 20px;
   font-size: 1.2rem;
   opacity: 0.9;
+   animation-delay: 0.4s;
 }
-
+.banner-left h1,
+.banner-left p {
+  opacity: 0;
+  transform: translateY(-40px);
+  animation: dropIn 1s ease forwards;
+}
+@keyframes dropIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 /* ===================== */
 /* Right Form */
 /* ===================== */
@@ -123,13 +144,16 @@ html, body {
   border-radius: 6px;
   cursor: pointer;
 }
-
+.banner-form button:hover{
+  background-color: #850a07;;
+  color: white;
+}
 /* ===================== */
 /* 📲 TABLET (≤1024px) */
 /* ===================== */
 @media (max-width: 1024px) {
   .banner-inner {
-    padding: 140px 40px;
+    padding: 128px 40px;
     gap: 40px;
   }
 
@@ -262,6 +286,7 @@ html, body {
 
 .scroll-btn.left {
   margin-right: 10px;
+  
 }
 
 .scroll-btn.right {
@@ -434,7 +459,7 @@ html, body {
   .why-box {
     width: 100%;
     padding: 12px;
-    justify-content: center;
+    /* justify-content: center; */
     border: none;
   }
 
@@ -743,3 +768,175 @@ html, body {
     margin: 0 5px;
   }
 }
+/* =========================================== */
+/* explore parts section new css styling */
+/* ==================================================== */
+/* =============================== */
+/* Explore Parts Section           */
+/* =============================== */
+.explore-parts {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background-color: #fafafa;
+}
+
+.explore-parts h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #222;
+}
+
+.highlight {
+  color: #e10600;
+}
+
+.scroll-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cards-container {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 1rem;
+  scrollbar-width: none; /* Firefox */
+}
+
+.cards-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* =============================== */
+/* Part Cards                      */
+/* =============================== */
+.part-card {
+  flex: 0 0 auto;
+  width: 200px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.part-card:hover {
+  transform: translateY(-6px);
+}
+
+.part-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* =============================== */
+/* Part Name - Fixed Height & Clean */
+/* =============================== */
+.part-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  padding: 0.75rem;
+  background-color: #fff;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  text-transform: capitalize;
+
+  /* keep height consistent across all cards */
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* gracefully handle long names */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* =============================== */
+/* Scroll Buttons                  */
+/* =============================== */
+.scroll-btn {
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  padding: 0.5rem;
+  transition: background 0.3s ease;
+}
+
+.scroll-btn:hover {
+  background: #ff0d00;
+  color: #fff;
+}
+
+.scroll-btn.left {
+  left: -10px;
+  background-color: black;
+}
+
+.scroll-btn.right {
+  right: -10px;
+  background-color:black;
+}
+
+/* =============================== */
+/* Responsive Design               */
+/* =============================== */
+@media (max-width: 1024px) {
+  .part-card {
+    width: 180px;
+  }
+  .part-card img {
+    height: 140px;
+  }
+  .part-name {
+    font-size: 0.95rem;
+    height: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .part-card {
+    width: 150px;
+  }
+  .part-card img {
+    height: 130px;
+  }
+  .part-name {
+    font-size: 0.9rem;
+    height: 45px;
+  }
+}
+
+@media (max-width: 480px) {
+  .part-card {
+    width: 130px;
+  }
+  .part-card img {
+    height: 110px;
+  }
+  .part-name {
+    font-size: 0.85rem;
+    height: 40px;
+  }
+}
+/* ========================================= */
+/* why .why-nexxa */
+/* ======================================== */

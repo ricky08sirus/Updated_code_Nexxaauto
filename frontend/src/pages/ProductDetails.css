@@ -1,3 +1,9 @@
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 /* ProductDetails.css - With Animated Success Popup */
 
 /* ===============================
@@ -149,7 +155,7 @@
 .submit-button {
   margin-top: 10px;
   padding: 14px;
-  background: #2563eb;
+  background: red;
   color: #ffffff;
   border: none;
   border-radius: 8px;
