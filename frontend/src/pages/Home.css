@@ -106,7 +106,7 @@ position: relative;
 /* Right Form */
 /* ===================== */
 .banner-right {
-  background: rgba(0, 0, 0, 0.65);
+  background: linear-gradient(45deg, black, #167687);
   padding: 25px;
   border-radius: 10px;
   max-width: 420px;
@@ -282,8 +282,7 @@ position: relative;
 }
 
 .part-card p {
-  background: linear-gradient(0deg, black, #c30909);
-  color: white;
+  background:linear-gradient(0deg, #000, #1092b9);
   padding: 6px 10px;
 }
 
@@ -310,8 +309,9 @@ position: relative;
 }
 
 .feature-card {
-  background: #000;
-  color: #ffffff82;
+  /* background: #000; */
+  background: linear-gradient(45deg, #1c2223, #5c9db1);
+  color: white;
   padding: 25px;
   width: 22%;
   border-bottom-right-radius: 3rem;
@@ -327,7 +327,7 @@ position: relative;
 
 .feature-card .icon {
   font-size: 28px;
-  box-shadow: 1px 1px 18px 1px #ef1212;
+  box-shadow: 1px 1px 18px 1px #12d0ef;
   border: 1px solid darkred;
   border-radius: 50%;
   width: 52px;
@@ -340,7 +340,7 @@ position: relative;
 .feature-card h3 {
   color: #fff;
   font-size: 16px;
-  border: 2px solid #8a0505;
+  border: 2px solid #21c3c966;
   padding: 6px 14px;
   border-bottom-right-radius: 10px;
 }
@@ -515,17 +515,16 @@ position: relative;
 }
 
 .review-card {
-  flex: 0 0 300px;
-  /* height: 380px;  */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: black;
-  padding: 20px;
-  box-shadow: 0 6px 20px rgb(0 0 0 / 19%);
-  border-top-right-radius: 2rem;
-  border: 14px solid #bb1313;
-  transition: transform 0.3s ease;
+flex: 0 0 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    box-shadow: 0 6px 20px #00000030;
+    border-top-right-radius: 2rem;
+    border: 2px solid #e16a6a;
+    transition: transform .3s ease;
+    background: linear-gradient(45deg, #1c2223, #5c9db1);
 }
 
 .review-card:hover {
@@ -569,7 +568,7 @@ position: relative;
 }
 
 .review-stars {
-  color: rgb(215, 3, 3);
+  color: #f7d316;
   font-size: 16px;
   margin-bottom: 8px;
 }
@@ -905,7 +904,7 @@ position: relative;
 .part-name {
   font-size: 1rem;
   font-weight: 600;
-  color: #333;
+  color:white;
   padding: 0.75rem;
   background-color: #fff;
   border-bottom-left-radius: 12px;
@@ -1012,7 +1011,8 @@ position: relative;
   transform: translateX(-50%);
   display: flex;
   gap: 20px;
-  background: rgba(0, 0, 0, 0.6);
+  /* background: rgba(0, 0, 0, 0.6); */
+  background: linear-gradient(358deg, black, #51bdcd91);
   padding: 15px 20px;
   border-radius: 6px;
   z-index: 3;

@@ -9,9 +9,9 @@ body {
 /* ===============================
    PAGE WRAPPER
 ================================ */
-.product-page {
+.product-details {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f8fafc, #eef2f7);
+  background: linear-gradient(135deg, #f8fafc, #6793c9);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -155,7 +155,7 @@ body {
 .submit-button {
   margin-top: 10px;
   padding: 14px;
-  background: red;
+  background: #c41e3a;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -581,7 +581,7 @@ body {
    MOBILE (≤ 480px)
 ================================ */
 @media (max-width: 480px) {
-  .product-page {
+  .product-details {
     padding: 12px;
     padding-top: 6rem;
   }

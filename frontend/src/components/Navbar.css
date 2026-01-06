@@ -1,7 +1,7 @@
 .flex
 .scroll-container {
-  border: 2px solid red;       /* Red border */
-  background: black;           /* Black background */
+  /* border: 2px solid red;        */
+  background: transparent;          
   overflow: hidden;
   width: 100%;
   white-space: nowrap;
@@ -19,7 +19,7 @@
 .scroll-item {
   margin: 0 10px;
   padding: 8px 20px;
-  background: #1f1f1f;         /* Slightly lighter black box */
+  background: linear-gradient(4deg, black, #1092b9);         /* Slightly lighter black box */
   border-radius: 8px;           /* Rounded corners */
   color: white;
   cursor: pointer;
@@ -42,7 +42,7 @@
 }
 
 .scroll-container {
-  border: 1.5px solid red;
+  /* border: 1.5px solid red; */
   background: black;
   overflow: hidden;
   white-space: nowrap;
@@ -100,7 +100,8 @@
 /* =============================== */
 nav {
   width: 100%;
-  background-color: #000;
+  /* background-color: #000; */
+  background: linear-gradient(4deg, black, #1092b9);
   color: #fff;
   font-family: "Inter", sans-serif;
   position:fixed;
@@ -146,14 +147,14 @@ nav img:hover {
   display: inline-block;
   padding:11px 8px;
   font-size: 0.9rem;
-  color: #ddd;
+  color: white;
   transition: color 0.3s ease;
   text-transform: capitalize;
 }
 
 .scroll-item:hover {
   color: whitesmoke;
-  background-color: darkred;
+  background-color: rgb(90, 203, 207);
 }
 
 @keyframes scroll-left {
@@ -222,7 +223,7 @@ nav .absolute .flex.justify-end {
 nav .absolute nav {
   display: flex;
   flex-direction: column;
-  margin-top: 1rem;
+  margin-top: 4rem;
 }
 
 nav .absolute nav a {

@@ -1,147 +1,3 @@
-// import React, { useState } from "react";
-// import { useLocation, useNavigate } from "react-router-dom";
-// import "./ProductDetails.css";
-
-// const ProductDetails = () => {
-//   const location = useLocation();
-//   const navigate = useNavigate();
-
-//   const { year, make, model, partCategory } = location.state || {};
-
-//   // Safety check if user opens page directly
-//   if (!year || !make || !model || !partCategory) {
-//     return (
-//       <div className="product-page">
-//         <div className="product-error">
-//           <h2>No product selected</h2>
-//           <p>Please search for a product first.</p>
-//           <button onClick={() => navigate("/")}>Go to Home</button>
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   const [formData, setFormData] = useState({
-//     year,
-//     make,
-//     model,
-//     partCategory,
-//     name: "",
-//     email: "",
-//     phone: "",
-//     message: "",
-//   });
-
-//   const [success, setSuccess] = useState(false);
-
-//   const handleChange = (e) => {
-//     setFormData({
-//       ...formData,
-//       [e.target.name]: e.target.value,
-//     });
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     try {
-//       const response = await fetch(
-//         "http://127.0.0.1:8000/api/product-request/",
-//         {
-//           method: "POST",
-//           headers: { "Content-Type": "application/json" },
-//           body: JSON.stringify(formData),
-//         }
-//       );
-
-//       if (response.ok) {
-//         setSuccess(true);
-//         setFormData({
-//           ...formData,
-//           name: "",
-//           email: "",
-//           phone: "",
-//           message: "",
-//         });
-//       } else {
-//         alert("Failed to send request.");
-//       }
-//     } catch (error) {
-//       console.error(error);
-//       alert("Server error.");
-//     }
-//   };
-
-//   return (
-//     <div className="product-page">
-//       <section className="product-form-section">
-
-//         {/* ✅ Dynamic Heading */}
-//         <h1 className="product-heading">
-//           Find Qualified Quality Used {partCategory} for {year} {make} {model}
-//         </h1>
-
-//         <p className="product-subheading">
-//           Fill the form below and our team will contact you shortly.
-//         </p>
-
-//         {success && (
-//           <div className="success-message">
-//             ✅ Message sent successfully. Our team will contact you soon.
-//           </div>
-//         )}
-
-//         <form className="product-form" onSubmit={handleSubmit}>
-//           {/* Auto-filled fields */}
-//           <input type="text" value={formData.year} readOnly />
-//           <input type="text" value={formData.make} readOnly />
-//           <input type="text" value={formData.model} readOnly />
-//           <input type="text" value={formData.partCategory} readOnly />
-
-//           {/* User inputs */}
-//           <input
-//             type="text"
-//             name="name"
-//             placeholder="Your Name"
-//             value={formData.name}
-//             onChange={handleChange}
-//             required
-//           />
-
-//           <input
-//             type="email"
-//             name="email"
-//             placeholder="Email Address"
-//             value={formData.email}
-//             onChange={handleChange}
-//             required
-//           />
-
-//           <input
-//             type="text"
-//             name="phone"
-//             placeholder="Phone Number"
-//             value={formData.phone}
-//             onChange={handleChange}
-//             required
-//           />
-
-//           <textarea
-//             name="message"
-//             placeholder="Additional Message (optional)"
-//             value={formData.message}
-//             onChange={handleChange}
-//           />
-
-//           <button type="submit">Request a Part</button>
-//         </form>
-//       </section>
-//     </div>
-//   );
-// };
-
-// export default ProductDetails;
-
 // ProductDetails.jsx - Backend Integrated Version
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -169,7 +25,7 @@ const ProductDetails = () => {
   // Safety check if user opens page directly
   if (!year || !manufacturerId || !modelId || !partCategoryId) {
     return (
-      <div className="product-page">
+      <div className="product-details">
         <div className="product-error">
           <h2>No product selected</h2>
           <p>Please search for a product first.</p>
@@ -301,7 +157,7 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="product-page">
+    <div className="product-details">
       {/* Animated Success Popup */}
       {showPopup && (
         <div className="success-popup-overlay" onClick={handleClosePopup}>
