@@ -1,164 +1,3 @@
-# # authentication/admin.py
-# from django.contrib import admin
-# from django.utils.html import format_html
-# from .models import ContactSubmission
-
-
-# @admin.register(ContactSubmission)
-# class ContactSubmissionAdmin(admin.ModelAdmin):
-#     """
-#     Admin interface for Contact Form Submissions
-#     """
-
-#     list_display = [
-#         "id_short",
-#         "name_or_anonymous",
-#         "email",
-#         "subject_short",
-#         "status_badge",
-#         "created_at",
-#         "is_new",
-#     ]
-
-#     list_filter = [
-#         "status",
-#         "created_at",
-#         "resolved_at",
-#     ]
-
-#     search_fields = [
-#         "email",
-#         "name",
-#         "subject",
-#         "message",
-#         "id",
-#     ]
-
-#     readonly_fields = [
-#         "id",
-#         "created_at",
-#         "updated_at",
-#         "resolved_at",
-#         "ip_address",
-#         "user_agent",
-#     ]
-
-#     fieldsets = (
-#         (
-#             "Contact Information",
-#             {
-#                 "fields": (
-#                     "id",
-#                     "email",
-#                     "name",
-#                     "phone",
-#                 )
-#             },
-#         ),
-#         (
-#             "Inquiry Details",
-#             {
-#                 "fields": (
-#                     "subject",
-#                     "message",
-#                     "status",
-#                 )
-#             },
-#         ),
-#         (
-#             "Admin Section",
-#             {"fields": ("admin_notes",)},
-#         ),
-#         (
-#             "Metadata",
-#             {
-#                 "fields": (
-#                     "ip_address",
-#                     "user_agent",
-#                     "created_at",
-#                     "updated_at",
-#                     "resolved_at",
-#                 ),
-#                 "classes": ("collapse",),
-#             },
-#         ),
-#     )
-
-#     ordering = ["-created_at"]
-#     date_hierarchy = "created_at"
-
-#     actions = [
-#         "mark_as_in_progress",
-#         "mark_as_resolved",
-#         "mark_as_new",
-#     ]
-
-#     # Custom display methods
-#     def id_short(self, obj):
-#         """Display shortened UUID"""
-#         return str(obj.id)[:8]
-
-#     id_short.short_description = "ID"
-
-#     def name_or_anonymous(self, obj):
-#         """Display name or 'Anonymous' if not provided"""
-#         return obj.name if obj.name else "Anonymous"
-
-#     name_or_anonymous.short_description = "Name"
-
-#     def subject_short(self, obj):
-#         """Display shortened subject"""
-#         if obj.subject:
-#             return obj.subject[:50] + "..." if len(obj.subject) > 50 else obj.subject
-#         return "(No subject)"
-
-#     subject_short.short_description = "Subject"
-
-#     def status_badge(self, obj):
-#         """Display status with color coding"""
-#         colors = {
-#             "new": "#e74c3c",  # Red
-#             "in_progress": "#f39c12",  # Orange
-#             "resolved": "#27ae60",  # Green
-#             "closed": "#95a5a6",  # Gray
-#         }
-#         color = colors.get(obj.status, "#95a5a6")
-#         return format_html(
-#             '<span style="background-color: {}; color: white; padding: 3px 10px; '
-#             'border-radius: 3px; font-weight: bold;">{}</span>',
-#             color,
-#             obj.get_status_display(),
-#         )
-
-#     status_badge.short_description = "Status"
-
-#     # Admin actions
-#     def mark_as_in_progress(self, request, queryset):
-#         """Mark selected submissions as in progress"""
-#         updated = queryset.update(status="in_progress")
-#         self.message_user(request, f"{updated} submission(s) marked as in progress.")
-
-#     mark_as_in_progress.short_description = "Mark as In Progress"
-
-#     def mark_as_resolved(self, request, queryset):
-#         """Mark selected submissions as resolved"""
-#         count = 0
-#         for submission in queryset:
-#             submission.mark_as_resolved()
-#             count += 1
-#         self.message_user(request, f"{count} submission(s) marked as resolved.")
-
-#     mark_as_resolved.short_description = "Mark as Resolved"
-
-#     def mark_as_new(self, request, queryset):
-#         """Mark selected submissions as new"""
-#         updated = queryset.update(status="new", resolved_at=None)
-#         self.message_user(request, f"{updated} submission(s) marked as new.")
-
-#     mark_as_new.short_description = "Mark as New"
-
-
-
 # authentication/admin.py
 from django.contrib import admin
 from django.utils.html import format_html
@@ -174,7 +13,8 @@ from .models import (
     PartImage,
     PartImageGallery,
     PartImageUpload,
-    PartImageTag
+    PartImageTag,
+    PartPrice 
 )
 
 
@@ -551,6 +391,66 @@ class PartImageUploadInline(admin.TabularInline):
     image_preview.short_description = 'Preview'
 
 
+
+
+
+class PartPriceInline(admin.TabularInline):
+    """
+    Inline for adding part prices directly in Part Image Gallery
+    """
+    model = PartPrice
+    extra = 1  # Show 1 empty form
+    fk_name = 'gallery_reference'
+    
+    # Only show these fields in the inline form
+    fields = [
+        'condition',
+        'price_type', 
+        'price',
+        'original_price',
+        'quantity_available',
+        'in_stock',
+        'warranty_months',
+        'is_active'
+    ]
+    
+    # IMPORTANT: Exclude the fields that are auto-populated from gallery
+    # This prevents Django from trying to access them as direct fields
+    exclude = ['year', 'manufacturer', 'model', 'part_category', 'part_name', 'part_number']
+    
+    readonly_fields = []
+
+    def save_formset(self, request, form, formset, change):
+        """Auto-populate vehicle/part info from gallery and assign created_by"""
+        instances = formset.save(commit=False)
+        gallery = form.instance  # The PartImageGallery being edited
+        
+        for instance in instances:
+            if isinstance(instance, PartPrice):
+                # Auto-populate from gallery
+                instance.gallery_reference = gallery
+                instance.year = gallery.year
+                instance.manufacturer = gallery.manufacturer
+                instance.model = gallery.model
+                instance.part_category = gallery.part_category
+                instance.part_name = gallery.part_name
+                
+                # Set created_by if new
+                if not instance.created_by:
+                    instance.created_by = request.user
+                
+                instance.save()
+        
+        # Delete instances that were marked for deletion
+        for instance in formset.deleted_objects:
+            instance.delete()
+        
+        formset.save_m2m()
+
+
+
+
+
 @admin.register(PartImageGallery)
 class PartImageGalleryAdmin(admin.ModelAdmin):
     """
@@ -623,7 +523,7 @@ class PartImageGalleryAdmin(admin.ModelAdmin):
         })
     )
     
-    inlines = [PartImageUploadInline]
+    inlines = [PartImageUploadInline, PartPriceInline]
     
     list_per_page = 25
     list_editable = ['is_published', 'is_featured']
@@ -844,3 +744,260 @@ class PartImageTagAdmin(admin.ModelAdmin):
         count = obj.galleries.count()
         return f"{count} galleries"
     gallery_count.short_description = 'Used in'
+
+
+
+
+# ============================================================================
+# PRICING ADMIN
+# ============================================================================
+
+@admin.register(PartPrice)
+class PartPriceAdmin(admin.ModelAdmin):
+    """
+    Admin interface for managing part prices
+    """
+    
+    list_display = [
+        'vehicle_info',
+        'part_name_display',
+        'condition',
+        'price_display',
+        'stock_status',
+        'price_type',
+        'validity_period',
+        'is_active',
+        'in_stock',
+        'created_at'
+    ]
+    
+    list_filter = [
+        'is_active',
+        'in_stock',
+        'condition',
+        'price_type',
+        'manufacturer',
+        'part_category',
+        'year',
+        'created_at',
+        'valid_from'
+    ]
+    
+    search_fields = [
+        'part_name',
+        'part_number',
+        'manufacturer__name',
+        'model__name',
+        'part_category__name',
+        'notes'
+    ]
+    
+    readonly_fields = [
+        'id',
+        'created_by',
+        'created_at',
+        'updated_at',
+        'discount_percentage_display',
+        'total_price_display',
+        'is_valid_display'
+    ]
+    
+    fieldsets = (
+        ('📋 Vehicle Information', {
+            'fields': ('year', 'manufacturer', 'model'),
+            'description': 'Select the vehicle year, make, and model'
+        }),
+        ('🔧 Part Information', {
+            'fields': ('part_category', 'part_name', 'part_number'),
+            'description': 'Specify the part details'
+        }),
+        ('💰 Pricing Information', {
+            'fields': (
+                'condition',
+                'price_type',
+                'price',
+                'original_price',
+                'discount_percentage_display',
+                'core_charge',
+                'shipping_cost',
+                'total_price_display'
+            ),
+            'description': 'Set pricing details'
+        }),
+        ('📦 Availability', {
+            'fields': ('in_stock', 'quantity_available', 'warranty_months'),
+        }),
+        ('📅 Validity Period', {
+            'fields': ('valid_from', 'valid_until', 'is_valid_display'),
+            'description': 'Set when this price is valid'
+        }),
+        ('🔗 References', {
+            'fields': ('inventory_item', 'gallery_reference'),
+            'classes': ('collapse',),
+            'description': 'Link to inventory or image gallery (optional)'
+        }),
+        ('⚙️ Settings', {
+            'fields': ('is_active', 'is_featured', 'notes'),
+        }),
+        ('ℹ️ Metadata', {
+            'fields': ('id', 'created_by', 'created_at', 'updated_at'),
+            'classes': ('collapse',)
+        })
+    )
+    
+    list_per_page = 25
+    list_editable = ['is_active']
+    date_hierarchy = 'created_at'
+    
+    actions = [
+        'activate_prices',
+        'deactivate_prices',
+        'mark_in_stock',
+        'mark_out_of_stock',
+        'feature_prices'
+    ]
+    
+    def save_model(self, request, obj, form, change):
+        """Auto-assign created_by"""
+        if not obj.created_by:
+            obj.created_by = request.user
+        super().save_model(request, obj, form, change)
+    
+    def vehicle_info(self, obj):
+        """Display vehicle information"""
+        return format_html(
+            '<strong>{}</strong><br><small>{} {}</small>',
+            obj.year,
+            obj.manufacturer.name,
+            obj.model.name
+        )
+    vehicle_info.short_description = 'Vehicle'
+    
+    def part_name_display(self, obj):
+        """Display part name with category"""
+        return format_html(
+            '<strong>{}</strong><br><small>{}</small>',
+            obj.part_name,
+            obj.part_category.name
+        )
+    part_name_display.short_description = 'Part'
+    
+    def price_display(self, obj):
+        """Display price with discount badge"""
+        discount = obj.discount_percentage
+        
+        if discount > 0:
+            return format_html(
+                '<div style="line-height: 1.4;">'
+                '<strong style="color: #28a745; font-size: 16px;">${:.2f}</strong><br>'
+                '<small style="text-decoration: line-through; color: #999;">${:.2f}</small> '
+                '<span style="background: #dc3545; color: white; padding: 2px 6px; '
+                'border-radius: 3px; font-size: 10px;">-{}%</span>'
+                '</div>',
+                obj.price,
+                obj.original_price,
+                discount
+            )
+        else:
+            return format_html(
+                '<strong style="color: #28a745; font-size: 16px;">${:.2f}</strong>',
+                obj.price
+            )
+    price_display.short_description = 'Price'
+    
+    def stock_status(self, obj):
+        """Display stock status with badge"""
+        if obj.quantity_available == 0:
+            color = '#dc3545'
+            text = 'Out of Stock'
+        elif obj.quantity_available <= 5:
+            color = '#ffc107'
+            text = f'{obj.quantity_available} left'
+        else:
+            color = '#28a745'
+            text = f'{obj.quantity_available} in stock'
+        
+        return format_html(
+            '<span style="background: {}; color: white; padding: 3px 8px; '
+            'border-radius: 3px; font-size: 11px;">{}</span>',
+            color, text
+        )
+    stock_status.short_description = 'Stock'
+    
+    def validity_period(self, obj):
+        """Display validity period"""
+        if obj.valid_until:
+            return format_html(
+                '<small>{}<br>to<br>{}</small>',
+                obj.valid_from.strftime('%Y-%m-%d'),
+                obj.valid_until.strftime('%Y-%m-%d')
+            )
+        return format_html(
+            '<small>From {}</small>',
+            obj.valid_from.strftime('%Y-%m-%d')
+        )
+    validity_period.short_description = 'Valid Period'
+    
+    def discount_percentage_display(self, obj):
+        """Show calculated discount"""
+        discount = obj.discount_percentage
+        if discount > 0:
+            return format_html(
+                '<span style="color: #dc3545; font-weight: bold;">-{}%</span>',
+                discount
+            )
+        return "No discount"
+    discount_percentage_display.short_description = 'Discount'
+    
+    def total_price_display(self, obj):
+        """Show total price including extras"""
+        total = obj.total_price
+        breakdown = f"Price: ${obj.price}"
+        if obj.core_charge and obj.core_charge > 0:
+            breakdown += f" + Core: ${obj.core_charge}"
+        if obj.shipping_cost and obj.shipping_cost > 0:
+            breakdown += f" + Shipping: ${obj.shipping_cost}"
+        
+        return format_html(
+            '<strong>${:.2f}</strong><br><small>{}</small>',
+            total,
+            breakdown
+        )
+    total_price_display.short_description = 'Total Price'
+    
+    def is_valid_display(self, obj):
+        """Show if price is currently valid"""
+        if obj.is_valid:
+            return format_html(
+                '<span style="color: #28a745;">✅ Valid</span>'
+            )
+        return format_html(
+            '<span style="color: #dc3545;">❌ Expired</span>'
+        )
+    is_valid_display.short_description = 'Current Status'
+    
+    # Admin Actions
+    def activate_prices(self, request, queryset):
+        queryset.update(is_active=True)
+        self.message_user(request, f"{queryset.count()} prices activated.")
+    activate_prices.short_description = "✅ Activate selected prices"
+    
+    def deactivate_prices(self, request, queryset):
+        queryset.update(is_active=False)
+        self.message_user(request, f"{queryset.count()} prices deactivated.")
+    deactivate_prices.short_description = "❌ Deactivate selected prices"
+    
+    def mark_in_stock(self, request, queryset):
+        queryset.update(in_stock=True)
+        self.message_user(request, f"{queryset.count()} marked as in stock.")
+    mark_in_stock.short_description = "📦 Mark as In Stock"
+    
+    def mark_out_of_stock(self, request, queryset):
+        queryset.update(in_stock=False, quantity_available=0)
+        self.message_user(request, f"{queryset.count()} marked as out of stock.")
+    mark_out_of_stock.short_description = "🚫 Mark as Out of Stock"
+    
+    def feature_prices(self, request, queryset):
+        queryset.update(is_featured=True)
+        self.message_user(request, f"{queryset.count()} prices featured.")
+    feature_prices.short_description = "⭐ Feature selected prices"
