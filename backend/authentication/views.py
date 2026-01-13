@@ -62,8 +62,8 @@ def submit_parts_inquiry(request):
         "email": "john@example.com",
         "phone": "+1234567890",
         "zipcode": "12345",
-        "additional_notes": "Optional notes"
-    }
+            
+        }
     """
     serializer = PartsInquirySerializer(data=request.data)
 
@@ -72,7 +72,7 @@ def submit_parts_inquiry(request):
             # Save inquiry with metadata
             inquiry = serializer.save(
                 ip_address=get_client_ip(request),
-                user_agent=request.META.get("HTTP_USER_AGENT", "")[:500],
+                #user_agent=request.META.get("HTTP_USER_AGENT", "")[:500],
             )
 
             logger.info(
@@ -245,7 +245,7 @@ def submit_contact_form(request):
             # Save submission with metadata
             submission = serializer.save(
                 ip_address=get_client_ip(request),
-                user_agent=request.META.get("HTTP_USER_AGENT", "")[:500],
+                #user_agent=request.META.get("HTTP_USER_AGENT", "")[:500],
             )
 
             logger.info(f"Contact form submitted by {submission.email}")
@@ -310,6 +310,8 @@ def health_check(request):
 
 
 class PartInventoryViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+                        
     """
     API endpoint for browsing parts inventory
     GET /api/parts/ - List all parts
@@ -397,6 +399,8 @@ class PartInventoryViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class PartImageGalleryViewSet(viewsets.ReadOnlyModelViewSet):
+
+    permission_classes = [AllowAny]
     """
     API endpoint for browsing part image galleries
     GET /api/part-galleries/ - List all galleries

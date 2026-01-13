@@ -3,7 +3,7 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-
+from decouple import config
 # Load environment variables
 load_dotenv()
 
@@ -21,6 +21,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:8080',
     'https://nexxaauto.com',
     'http://nexxaauto.com',
+    'https://www.nexxaauto.com',
 ]
 
 CSRF_COOKIE_SECURE = False  # Set to True in production with HTTPS
@@ -98,6 +99,13 @@ DATABASES = {
         },
     }
 }
+
+
+RESEND_API_KEY = config('RESEND_API_KEY',default='re_Cz9mVDNi_4Z4xA7KKJa7PuhxBMjmopPSpD')
+INFO_EMAIL = config('INFO_EMAIL', default='info@nexxaauto.com')
+EMAIL_HOST_PASSWORD = RESEND_API_KEY
+DEFAULT_FROM_EMAIL = INFO_EMAIL
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [

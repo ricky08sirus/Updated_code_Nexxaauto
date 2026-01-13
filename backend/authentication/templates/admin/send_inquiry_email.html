@@ -102,8 +102,21 @@
         </form>
     </div>
     <script>
+<<<<<<< Updated upstream
         let partCount = 0, manufacturers = [], models = [], categories = [], partGalleries = [];
         const API_BASE = 'https://nexxaauto.com/api';
+=======
+        let partCount = 0;
+        let manufacturers = [];
+        let models = [];
+        let categories = [];
+        let partGalleries = [];
+
+        // API Base URL
+        const API_BASE = 'https://nexxaauto.com/api';
+
+        // Pre-load data from inquiry
+>>>>>>> Stashed changes
         const inquiryYear = {{ inquiry.year }};
         const inquiryManufacturer = "{{ inquiry.manufacturer.name }}";
         const inquiryModel = "{{ inquiry.model.name }}";

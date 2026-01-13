@@ -97,101 +97,150 @@ class PartCategory(models.Model):
 # ============================================================================
 
 class PartsInquiry(models.Model):
-    """
-    Model to store parts search/inquiry submissions from users
-    """
-
-    STATUS_CHOICES = [
-        ("new", "New"),
-        ("in_progress", "In Progress"),
-        ("quoted", "Quote Sent"),
-        ("completed", "Completed"),
-        ("cancelled", "Cancelled"),
-    ]
-
+    """Model for customer parts inquiries"""
+    
+    # Primary Key - UUID
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
-    # Vehicle Information
-    year = models.IntegerField(help_text="Vehicle year")
+    
+    # Customer Information
+    name = models.CharField(max_length=255, help_text="Customer name")
+    email = models.EmailField(help_text="Customer email address")
+    phone = models.CharField(max_length=20, blank=True, help_text="Customer phone")
+    zipcode = models.CharField(max_length=10, blank=True, help_text="Customer zipcode")
+    
+    # Vehicle Information - Using ForeignKeys
     manufacturer = models.ForeignKey(
         Manufacturer,
         on_delete=models.SET_NULL,
         null=True,
-        related_name="inquiries",
-        help_text="Vehicle manufacturer",
+        blank=True,
+        help_text="Car manufacturer"
     )
     model = models.ForeignKey(
         VehicleModel,
         on_delete=models.SET_NULL,
         null=True,
-        related_name="inquiries",
-        help_text="Vehicle model",
+        blank=True,
+        help_text="Car model"
+    )
+    year = models.IntegerField(
+        default=2024,
+        blank=True,
+        null=True,
+        help_text="Car year"
     )
     part_category = models.ForeignKey(
         PartCategory,
         on_delete=models.SET_NULL,
         null=True,
-        related_name="inquiries",
-        help_text="Part category being searched",
+        blank=True,
+        help_text="Category of parts needed"
     )
-
-    # Customer Contact Information
-    name = models.CharField(max_length=255, help_text="Customer's name")
-    email = models.EmailField(max_length=255, help_text="Customer's email address")
-    phone = models.CharField(max_length=20, help_text="Customer's phone number")
-    zipcode = models.CharField(max_length=10, help_text="Customer's ZIP code")
-
-    # Additional Information
-    additional_notes = models.TextField(
-        blank=True, help_text="Any additional information or special requests"
+    
+    # Parts Information
+    parts_needed = models.TextField(
+        default='',
+        blank=True,
+        help_text="Description of parts needed"
     )
-
-    # Status tracking
+    
+    # Status
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('quoted', 'Quoted'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+    ]
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
-        default="new",
-        help_text="Current status of the inquiry",
+        default='pending'
     )
-
-    # Admin notes
-    admin_notes = models.TextField(
-        blank=True, help_text="Internal notes for admin staff"
-    )
-
+    
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     completed_at = models.DateTimeField(null=True, blank=True)
-
-    # Metadata
-    ip_address = models.GenericIPAddressField(
-        null=True, blank=True, help_text="IP address of the submitter"
+    
+    # Email Response Tracking
+    email_sent = models.BooleanField(
+        default=False,
+        help_text="Whether a reply email has been sent"
     )
-    user_agent = models.TextField(blank=True, help_text="Browser user agent")
-
+    email_sent_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="When the reply email was sent"
+    )
+    email_sent_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='sent_inquiry_emails',
+        help_text="Admin who sent the email"
+    )
+    email_subject = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Subject line of the sent email"
+    )
+    email_message = models.TextField(
+        blank=True,
+        help_text="Custom message sent in the email"
+    )
+    email_error = models.TextField(
+        blank=True,
+        help_text="Error message if email failed to send"
+    )
+    
+    # Parts Information Sent (store as JSON)
+    parts_info_sent = models.JSONField(
+        null=True,
+        blank=True,
+        help_text="Information about parts sent in the email"
+    )
+    
+    # Metadata
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    
     class Meta:
         db_table = "parts_inquiries"
-        verbose_name = "Parts Inquiry"
-        verbose_name_plural = "Parts Inquiries"
-        ordering = ["-created_at"]
         indexes = [
             models.Index(fields=["email"]),
             models.Index(fields=["status"]),
             models.Index(fields=["-created_at"]),
             models.Index(fields=["manufacturer", "model"]),
+            models.Index(fields=["email_sent"]),
         ]
-
+        ordering = ['-created_at']
+    
     def __str__(self):
-        return f"{self.name} - {self.year} {self.manufacturer} {self.model} ({self.created_at.strftime('%Y-%m-%d')})"
-
-    def mark_as_completed(self):
-        """Mark this inquiry as completed"""
-        self.status = "completed"
-        self.completed_at = timezone.now()
-        self.save(update_fields=["status", "completed_at", "updated_at"])
-
-
+        manufacturer_name = self.manufacturer.name if self.manufacturer else "Unknown"
+        model_name = self.model.name if self.model else "unknown"
+        return f"{self.name} - {manufacturer_name} {model_name} ({self.status})"
+    
+    def mark_email_sent(self, user, subject, message, parts_info):
+        """Mark this inquiry as having received an email reply"""
+        from django.utils import timezone
+        
+        self.email_sent = True
+        self.email_sent_at = timezone.now()
+        self.email_sent_by = user
+        self.email_subject = subject
+        self.email_message = message
+        self.parts_info_sent = parts_info
+        self.status = "quoted"
+        self.save(update_fields=[
+            'email_sent',
+            'email_sent_at',
+            'email_sent_by',
+            'email_subject',
+            'email_message',
+            'parts_info_sent',
+            'status',
+            'updated_at'
+        ])
 class ContactSubmission(models.Model):
     """
     Model to store contact form submissions from users
