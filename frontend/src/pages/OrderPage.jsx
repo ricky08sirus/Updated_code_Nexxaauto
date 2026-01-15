@@ -729,7 +729,7 @@ const OrderPage = () => {
               cursor: (!dynamicPrice || priceLoading || !savedAddressId) ? 'not-allowed' : 'pointer'
             }}
           >
-            {priceLoading ? 'Loading Price...' : !dynamicPrice ? 'Price Pending' : !savedAddressId ? 'Save Address First' : 'Confirm and Pay'}
+            {/* {priceLoading ? 'Loading Price...' : !dynamicPrice ? 'Price Pending' : !savedAddressId ? 'Save Address First' : 'Confirm and Pay'} */}
           </button>
 
           <div className="shipping-address-prompt">

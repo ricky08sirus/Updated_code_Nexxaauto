@@ -66,7 +66,7 @@ const CallModal = () => {
               <a href="tel:+18882660007" className="call-modal-btn btn-call">
                 <span>📞</span> Call Now
               </a>
-              <button 
+              {/* <button 
                 className="call-modal-btn btn-message" 
                 onClick={() => {
                   openMessage();
@@ -74,7 +74,7 @@ const CallModal = () => {
                 }}
               >
                 <span>💬</span> Message
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

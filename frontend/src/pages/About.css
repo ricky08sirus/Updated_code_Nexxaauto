@@ -43,11 +43,11 @@ body {
 }
 
 .about-text p {
-  color: #444;
+  color:black;
   line-height: 1.8;
   margin-bottom: 15px;
   text-align: justify;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .about-image {
@@ -55,11 +55,12 @@ body {
 }
 
 .about-image img {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  object-fit: cover;
+width: 80%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px #00000026;
+    object-fit: cover;
+    margin: auto;
 }
 
 /* Reverse layout for Section 3 */
@@ -90,11 +91,11 @@ body {
   font-size:25px;
 }
 .about-container-full p {
-  color: #444;
-  line-height: 1.8;
-  margin-bottom: 20px;
-  text-align: justify;
-  font-size: 20px;
+color: black;
+    line-height: 1.8;
+    margin-bottom: 21px;
+    text-align: justify;
+    font-size: 16px;
 }
 .about-text ul{
   font-size: 15px;

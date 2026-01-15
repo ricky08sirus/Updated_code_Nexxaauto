@@ -44,6 +44,7 @@ const brandData = {
   1: {
     id: 1,
     title: "Acura",
+    slug: "acura",
     image: accura,
     description: "We have taken the time to inventory all wrecked and salvaged Acura vehicles to make sure you have instant access to any used Acura parts you are searching for online. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. Nexxaauto.com our one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Acura is a 'luxury' line of Honda Motor Company. It was the first luxury car brand in the Japanese automotive industry. They had started with two models at first, the Legend and the Integra. With the success of the 'Legend' in the late 1980's, this inspired other Japanese automakers to follow suit. In 1990 the launch of the NSX was a mid engine sports car that offered a reliable but very practical alternative to common 'European' luxury cars.",
     models: [
@@ -65,6 +66,7 @@ const brandData = {
   {
     id: 2,
     title: "BMW",
+    slug: "bmw",
     image: bmw,
     description: "We have taken the time to inventory all wrecked and salvaged BMW vehicles to make sure you have instant access to any used BMW parts you are searching for online. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Originally established as RAPP MOTORENWERKE AIRCRAFT, now BMW (Bavarian Motor Works) started manufacturing automobiles in 1928. High performance, luxury, and well handling is just the tip of the ice berg when it comes to what a BMW is. It also has coined the catch name: 'The Ultimate Driving Machine' BMW also produces motorcycles, and have started the early development of the 'plug in' vehicle. The i3 all electric design began in September 2013.",
     models: [
@@ -133,6 +135,7 @@ const brandData = {
   {
     id: 3,
     title: "Buick",
+    slug: "buick",
     image: buik,
     description: "We have taken the time to inventory all wrecked and salvaged Buick vehicles to make sure you have instant access to any used Buick parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Buick formally was a known as Buick Motor Division, which was an luxury car maker of General Motors. Mostly marketed in North America, it still fell under the flagship luxury brand of Cadillac. Buick's are also known for exceptional quality, and reliability. Don't worry to much if you end up needing to purchase parts for a Buick. Most GM models interchange, because its cheaper to make cars that all use the same parts, just different 'skins' We have taken inventory of all of our junkyards that have any Buick related vehicles in their inventory, and have made sure we  were able to check on each and every used Buick part we could locate for your customers. Popularity has also given the salvage yard industry plenty of inventory to go around. Buick was a few of brands of GM to survive the 'down size' of 2008",
     models: [
@@ -161,6 +164,7 @@ const brandData = {
   {
     id: 4,
     title: "Cadillac",
+    slug: "cadillac",
     image: cadillac,
     description: "We have taken the time to inventory all wrecked and salvaged Cadillac vehicles to make sure you have instant access to any used Cadillac parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Cadillac was formally known as Cadillac Motor Car Division, is a brand under General Motor Company. It is one of the oldest auto brands in the world. 1902 was when the first Cadillac rolled off the assembly line. It was named after Antoine de la Mothe Cadillac, who founded Detroit, MI. Cadillac was also, the first American car to ever win the Royal Automobile Club of England's Dewar Trophy by successfully demonstrating the interchangeability of its component parts during a reliability test in 1908.Cadillac vehicles are expensive in general, and sometimes it can be hard locating parts for any Cadillac vehicles, but every single Cadillac vehicle we have in our inventory has been inspected and checked. Any bad or nonfunctional parts have been removed from the system.",
     models: [
@@ -189,6 +193,7 @@ const brandData = {
   {
     id: 5,
     title: "Chevrolet",
+    slug: "chevrolet",
     image: chevrolet,
     description: "We have taken the time to inventory all wrecked and salvaged Chevy vehicles to make sure you have instant access to any used Chevy parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Chevrolet or 'Chevy' is another division of General Motors. Founded by Louis Chevrolet and William C Durant who started the company November 3, 1911 as the Chevrolet Motor Car Company. One of the most common vehicle makes in the United States, never tremble or fear when needing to locate a part for this manufacturer. Every salvage yard in the United States has at least 30% of their inventory made by GM, who interchanges parts with Chevrolet. This company has been through many up's and down's through out the years, but has stayed a major foundation of American workmanship. Beautiful Chevrolet vehicles are still being produced today and we will do our part to insure any used Chevy parts you need, we have in stock.",
     models: [
@@ -268,6 +273,7 @@ const brandData = {
   {
     id: 6,
     title: "Chrysler",
+    slug: "chrysler",
     image: chrysler,
     description: "We have taken the time to inventory all wrecked and salvaged Chrysler vehicles to make sure you have instant access to any used Chrysler parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Chrysler was founded June 6, 1925 by Walter Chrysler, when the company Maxwell Motor Company was diluted and reorganized. 1924 was the year Chrysler launched a 6-cylinder automobile, which was more affordable than the competition's 3 and 4 cylinder powered 'horseless carriages'",
     models: [
@@ -293,6 +299,7 @@ const brandData = {
   {
     id: 7,
     title: "Daewoo",
+    slug: "daewoo",
     image: daewoo,
     description: "We have taken the time to inventory all wrecked and salvaged Daewoo vehicles to make sure you have instant access to any used Daewoo parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
     models: [
@@ -305,6 +312,7 @@ const brandData = {
   {
     id: 8,
     title: "Daihatsu",
+    slug: "daihatsu",
     image: daihatsu,
     description: "We have taken the time to inventory all wrecked and salvaged Daihatsu vehicles to make sure you have instant access to any used Daihatsu parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
     models: [
@@ -316,6 +324,7 @@ const brandData = {
   {
     id: 9,
     title: "Dodge",
+    slug: "dodge",
     image: dodge,
     description: "We have taken the time to inventory all wrecked and salvaged Dodge vehicles to make sure you have instant access to any used Dodge parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Dodge is an American Auto Manufacturer, and was founded by the 'Dodge Brothers' Horace and John in the early 1900's. At first, Dodge was a supplier of auto parts for all the Detroit, MI based auto makers. The started making automobiles in 1914.",
     models: [
@@ -371,6 +380,7 @@ const brandData = {
   {
     id: 10,
     title: "Eagle",
+    slug: "eagle",
     image: eagle,
     description: "We have taken the time to inventory all wrecked and salvaged Eagle vehicles to make sure you have instant access to any used Eagle parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
     models: [
@@ -401,6 +411,7 @@ const brandData = {
   {
     id: 11,
     title: "Ford",
+    slug: "ford",
     image: ford,
     description: "We have taken the time to inventory all wrecked and salvaged Ford vehicles to make sure you have instant access to any used Ford parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Ford was founded by Henry Ford, and was incorporated June 1903. The company sells automobiles and they sell luxury automobiles under the 'LINCOLN' brand name. It is the 2nd largest auto maker in the United States.",
     models: [
@@ -467,6 +478,7 @@ const brandData = {
   {
     id: 12,
     title: "GMC",
+    slug: "gmc",
     image: gmc,
     description: "We have taken the time to inventory all wrecked and salvaged GMC vehicles to make sure you have instant access to any used GMC parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
     models: [
@@ -508,6 +520,7 @@ const brandData = {
   {
     id: 13,
     title: "Honda",
+    slug: "honda",
     image: honda,
     description: "We have taken the time to inventory all wrecked and salvaged Honda vehicles to make sure you have instant access to any used GMC parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. American Honda Motor Company, the North American subsidiary of Japan's Honda Motor Company, has a significant presence in the United States, established in 1959. It is responsible for distributing and marketing Honda and Acura vehicles, along with powersports, power equipment, and marine products. The company has made substantial investments in the U.S., with a strong focus on American manufacturing, including 12 manufacturing plants in six states, and employs tens of thousands of associates",
     models: [
@@ -532,6 +545,7 @@ const brandData = {
   {
     id: 14,
     title: "Hyundai",
+    slug: "hyundai",
     image: hyundai,
     description: "We have taken the time to inventory all wrecked and salvaged Hyundai vehicles to make sure you have instant access to any used Hyundai parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Hyundai has operated in the United States since 1986, starting with the affordable Excel model and initially facing quality issues that led to a decline in sales. In response, Hyundai significantly invested in improving quality, design, and technology, leading to a more competitive lineup. The company has since grown to include a full range of vehicles, extensive manufacturing and R&D facilities in the U.S. (such as plants in Alabama and Georgia, and a design centre in California), and has made substantial investments in future technologies like autonomous driving,",
     models: [
@@ -558,6 +572,7 @@ const brandData = {
   {
     id: 15,
     title: "Infiniti",
+    slug: "infiniti",
     image: infiniti,
     description: "We have taken the time to inventory all wrecked and salvaged Infiniti vehicles to make sure you have instant access to any used Infiniti parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Infiniti is the luxury vehicle division of the Japanese automaker Nissan, which launched in the United States in 1989 to compete in the premium car market. The brand was created around the same time as Acura and Lexus as a response to Japanese car companies wanting to sell more expensive vehicles in the U.S. despite import restrictions. Today, Infiniti USA sells a range of luxury SUVs, crossovers, sedans, and coupes, such as the QX60, QX80, and Q50",
     models: [
@@ -594,6 +609,7 @@ const brandData = {
 {
 id: 16,
 title: "Isuzu",
+slug: "isuzu",
 image: isuzu,
 description: "We have taken the time to inventory all wrecked and salvaged Isuzu vehicles to make sure you have instant access to any used Isuzu parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Isuzu's presence in the United States is now primarily focused on its commercial truck division, which has been the best-selling low-cab-forward truck in the country since 1986. The company previously sold consumer vehicles but officially exited the U.S. passenger market in 2009, though some of its last consumer vehicles were rebadged General Motors models",
 models: [
@@ -619,6 +635,7 @@ models: [
 {
 id: 17,
 title: "Jaguar",
+slug: "jaguar",
 image: jaguar,
 description: "We have taken the time to inventory all wrecked and salvaged Jaguar vehicles to make sure you have instant access to any used Jaguar parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Jaguar is undergoing a major transformation, moving away from its current lineup to focus entirely on new, all-electric vehicles starting in 2026. This comes after a period of declining sales in the U.S., which fell significantly from a peak in 2017 due to factors like an aging model line and struggles to compete with rivals. Owned by India's Tata Motors, the brand is re-launching with a new logo, a fresh brand identity, and a strategy to regain relevance in the luxury market",
 models: [
@@ -640,6 +657,7 @@ models: [
 {
 id: 18,
 title: "Jeep",
+slug: "jeep",
 image: jeep,
 description: "We have taken the time to inventory all wrecked and salvaged Jeep vehicles to make sure you have instant access to any used Jeep parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Jeep's motor options in the United States include the 3.6L Pentastar V6, 2.0L turbocharged inline-4, and the PHEV 4xe, which combines a 2.0L turbo with electric motors. The brand is now owned by the multinational company Stellantis, but it has a deep history in the U.S. and continues to manufacture many of its vehicles and components in the United States",
 models: [
@@ -662,6 +680,7 @@ models: [
 {
 id: 19,
 title: "Kia",
+slug: "kia",
 image: kia,
 description: "We have taken the time to inventory all wrecked and salvaged Kia vehicles to make sure you have instant access to any used Kia parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Kia America is the U.S. sales, marketing, and distribution arm of the South Korean automaker, headquartered in Irvine, California. The company has been in the U.S. since 1992, now offers a full lineup of vehicles through a large dealer network, and has a major manufacturing plant in West Point, Georgia, which produces popular models like the Sorento and Telluride. Kia is known for its technology-rich vehicles, industry-leading warranty, and significant brand turnaround, which included a rebrand and the introduction of successful models like the Telluride,",
 models: [
@@ -686,6 +705,7 @@ models: [
 {
 id: 20,
 title: "Land Rover",
+slug: "land-rover",
 image: landrover,
 description: "We have taken the time to inventory all wrecked and salvaged Landrover vehicles to make sure you have instant access to any used Landrover parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Land Rover is a British SUV manufacturer, owned by India's Tata Motors, that sells a range of vehicles in the United States, from luxury SUVs like the Range Rover to rugged vehicles like the Defender. Officially sold in the U.S. since 1987, the brand focuses on a combination of style and capability, competing with other luxury brands like BMW and Mercedes-Benz. Recent sales data shows strong performance for models like the Defender and Range Rover but underperformance for the Discovery and Discovery Sport",
 models: [
@@ -704,6 +724,7 @@ models: [
 {
 id: 21,
 title: "Lexus",
+slug: "lexus",
 image: lexus,
 description: "We have taken the time to inventory all wrecked and salvaged Lexus vehicles to make sure you have instant access to any used Lexus parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Lexus is Toyota's luxury vehicle division, first launched in the US in 1989, and is now a major player in the American luxury car market, known for its focus on hospitality, craftsmanship, design, and technology. While the name's etymology is debated, the brand's identity is built on creating a luxurious and high-tech customer experience, exemplified by the Japanese concept of Omotenashi (hospitality). Several Lexus models are manufactured in the United States, including the ES in Kentucky and some RX models in Canada",
 models: [
@@ -742,6 +763,7 @@ models: [
 {
 id: 22,
 title: "Lincoln",
+slug: "lincoln",
 image: lincoln,
 description: "We have taken the time to inventory all wrecked and salvaged Lincoln vehicles to make sure you have instant access to any used Lincoln parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Lincoln is the luxury vehicle division of the American company Ford Motor Company, known for its upscale SUVs and trucks, and has been a major American luxury brand since being founded by Henry Leland in 1917 and purchased by Ford in 1922. It has a rich history, including a special relationship with the U.S. presidency, and is currently focusing on advanced technology and electrification, while offering a lineup of SUVs like the Navigator, Aviator, and Corsair",
 models: [
@@ -764,6 +786,7 @@ models: [
 {
 id: 23,
 title: "Mazda",
+slug: "mazda",
 image: mazda,
 description: "We have taken the time to inventory all wrecked and salvaged Mazda vehicles to make sure you have instant access to any used Mazda parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Mazda has been a presence in the United States since formally entering the market in 1970, though its North American operations were consolidated in 1997. The company's U.S. headquarters are in Irvine, California, and its regional sales and marketing efforts have achieved significant success, with 2021 marking its best sales year since 1994. Despite its historical challenges with fuel-efficient rotary engines, Mazda continues to operate in the U.S. with a manufacturing plant in Alabama",
 models: [
@@ -802,6 +825,7 @@ models: [
 {
 id: 24,
 title: "Mercedes",
+slug: "benz",
 image: benz,
 description: "We have taken the time to inventory all wrecked and salvaged Mercedes vehicles to make sure you have instant access to any used Mercedes parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Mercedes-Benz in the United States is operated by Mercedes-Benz USA (MBUSA), headquartered in Atlanta, Georgia, which handles sales, marketing, and customer service. The U.S. is the second-largest market for the company, which has a significant manufacturing presence in Alabama through its plant, Mercedes-Benz U.S. International (MBUSI), that produces SUVs like the GLE, GLS, and EQ models. Additionally, the company has a Research & Development center in California, focusing on innovation and adapting technology for the North American market",
 models: [
@@ -845,6 +869,7 @@ models: [
 {
 id: 25,
 title: "Mercury",
+slug: "mercury",
 image: mercury,
 description: "We have taken the time to inventory all wrecked and salvaged Mercury vehicles to make sure you have instant access to any used Mercury parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Mercury is a well-known brand in the United States, primarily recognized for its marine engines through its division, Mercury Marine, a major player in outboard and sterndrive motors for both recreational and high-performance use. It also historically produced a separate brand of automobiles under the Ford Motor Company, which was a medium-priced car brand that existed from 1939 to 2011",
 models: [
@@ -872,6 +897,7 @@ models: [
 {
 id: 26,
 title: "Mini Cooper",
+slug: "mini-cooper",
 image: minicooper,
 description: "We have taken the time to inventory all wrecked and salvaged Mini cooper vehicles to make sure you have instant access to any used Mini cooper parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. MINI Cooper is a British brand, owned by the BMW Group, that is popular in the United States for its combination of iconic style and 'go-kart' like handling. MINI USA operates as a business unit of BMW of North America, with a network of dealers across the country. The brand has expanded its model range beyond the classic three-door to include the four-door and convertible models, as well as the larger Countryman, to appeal to more customers, and continues to innovate with electrified options",
 models: [
@@ -884,6 +910,7 @@ models: [
 {
 id: 27,
 title: "Mitsubishi",
+slug: "mitsubishi",
 image: mitsubishi,
 description: "We have taken the time to inventory all wrecked and salvaged Mitsubishi vehicles to make sure you have instant access to any used Mitsubishi parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Mitsubishi has operated in the United States since the 1980s, initially selling cars through a partnership with Chrysler before establishing its own brand in 1982. Mitsubishi Motors North America, Inc. is the U.S. subsidiary, which manages sales and research and development through a network of approximately 350 dealers. While the company has faced challenges, it has maintained its presence by focusing on a lineup of SUVs and crossovers",
 models: [
@@ -910,6 +937,7 @@ models: [
 {
 id: 28,
 title: "Nissan",
+slug: "nissan",
 image: nissan,
 description: "We have taken the time to inventory all wrecked and salvaged Nissan vehicles to make sure you have instant access to any used Nissan parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Nissan in the United States is managed by Nissan North America, Inc., a subsidiary of Japan's Nissan Motor Corporation, with its headquarters in Smyrna, Tennessee. The company sells both Nissan and Infiniti brand vehicles through a large dealer network and has significant manufacturing operations in the U.S., with popular models like the Rogue, Altima, Sentra, and Frontier being produced domestically. The company first entered the U.S. market in the 1950s, initially as the Datsun brand, and has since grown to become a major automotive player in North America",
 models: [
@@ -953,6 +981,7 @@ models: [
 {
 id: 29,
 title: "Oldsmobile",
+slug: "oldsmobile",
 image: oldsmobile,
 description: "We have taken the time to inventory all wrecked and salvaged Oldsmobile vehicles to make sure you have instant access to any used Oldsmobile parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Oldsmobile was a historic American automobile brand under General Motors, known for innovation like the first mass-produced curved-dash car and the Hydramatic automatic transmission. Founded by Ransom E. Olds in 1897, it became a leading brand, especially in the 1950s with its powerful V8 'Rocket' engines, and also produced iconic models like the Cutlass and Toronado before ceasing production in 2004 due to declining sales",
 models: [
@@ -976,6 +1005,7 @@ models: [
 {
 id: 30,
 title: "Plymouth",
+slug: "plymouth",
 image: plymouth,
 description: "We have taken the time to inventory all wrecked and salvaged Plymouth vehicles to make sure you have instant access to any used Plymouth parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Plymouth was an American automobile brand produced by the Chrysler Corporation from 1928 to 2001. It was created to compete in the low-priced market against brands like Ford and Chevrolet. Over the decades, Plymouth developed a reputation for offering a range of vehicles, from budget-friendly sedans to popular performance models like the Barracuda and Road Runner. The brand was officially discontinued in 2001 due to dwindling sales and a corporate merger",
 models: [
@@ -1000,6 +1030,7 @@ models: [
 {
 id: 31,
 title: "Pontiac",
+slug: "pontiac",
 image: pontiac,
 description: "We have taken the time to inventory all wrecked and salvaged Pontiac vehicles to make sure you have instant access to any used Pontiac parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Pontiac was an American automobile brand owned by General Motors (GM) that was in operation from 1926 to 2010. Initially introduced as a companion make to Oakland, it became a division known for affordable performance vehicles like the GTO and Firebird. Due to GM's restructuring after its 2009 Chapter 11 bankruptcy, the Pontiac brand was discontinued, with the last vehicle produced in 2010",
 models: [
@@ -1030,6 +1061,7 @@ models: [
 {
 id: 32,
 title: "Porsche",
+slug: "porsche",
 image: porsche,
 description: "We have taken the time to inventory all wrecked and salvaged Porsche vehicles to make sure you have instant access to any used Porsche parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Porsche's motor operations in the United States are primarily through Porsche Cars North America (PCNA), which was established in 1984 and now sells a wide range of gasoline, hybrid, and fully electric vehicles, including the 911, Taycan, Panamera, Macan, and Cayenne. While Porsche engines are manufactured in Germany, the US market is a key region for sales, with strong performance reflected in recent sales growth",
 models: [
@@ -1051,6 +1083,7 @@ models: [
 {
 id: 33,
 title: "Saab",
+slug: "saab",
 image: saab,
 description: "We have taken the time to inventory all wrecked and salvaged Saab vehicles to make sure you have instant access to any used Saab parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
 models: [
@@ -1070,6 +1103,7 @@ models: [
 {
 id: 34,
 title: "Saturn",
+slug: "saturn",
 image: saturn,
 description: "We have taken the time to inventory all wrecked and salvaged Saturn vehicles to make sure you have instant access to any used Saturn parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
 models: [
@@ -1086,6 +1120,7 @@ models: [
 {
 id: 35,
 title: "Scion",
+slug: "scion",
 image: scion,
 description: "We have taken the time to inventory all wrecked and salvaged Scion vehicles to make sure you have instant access to any used Scion parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
 models: [
@@ -1101,6 +1136,7 @@ models: [
 {
 id: 36,
 title: "Subaru",
+slug: "subaru",
 image: subaru,
 description: "We have taken the time to inventory all wrecked and salvaged Subaru vehicles to make sure you have instant access to any used Subaru parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today. Subaru operates a major U.S. manufacturing facility in Lafayette, Indiana, which is its only plant outside of Japan. Subaru of America (SOA), headquartered in Camden, New Jersey, is the U.S. distributor and markets vehicles through a network of over 600 dealerships. The brand is known for its Boxer engine, all-wheel drive, and emphasis on safety and reliability",
 models: [
@@ -1120,6 +1156,7 @@ models: [
 {
 id: 37,
 title: "Suzuki",
+slug: "suzuki",
 image: suzuki,
 description: "We have taken the time to inventory all wrecked and salvaged Suzuki vehicles to make sure you have instant access to any used Suzuki parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
 models: [
@@ -1142,6 +1179,7 @@ models: [
 {
 id: 38,
 title: "Toyota",
+slug: "toyota",
 image: toyota,
 description: "We have taken the time to inventory all wrecked and salvaged Toyota vehicles to make sure you have instant access to any used Toyota parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
 models: [
@@ -1181,6 +1219,7 @@ models: [
 {
 id: 39,
 title: "Volkswagen",
+slug: "volkswagen",
 image: volkswagen,
 description: "We have taken the time to inventory all wrecked and salvaged Volkswagen vehicles to make sure you have instant access to any used Volkswagen parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
 models: [
@@ -1211,6 +1250,7 @@ models: [
 {
 id: 40,
 title: "Volvo",
+slug: "volvo",
 image: volvo,
 description: "We have taken the time to inventory all wrecked and salvaged Volvo vehicles to make sure you have instant access to any used Volvo parts you are searching for online. We have junkyards in locations all over the United States, that can quickly serve you today. You simply need to complete the used auto parts request form, so we can quickly quote you the best price guaranteed. nexxaauto.com is your one stop shop when it comes to any of your used auto part needs, and we can't wait to have the opportunity to help you today.",
 models: [

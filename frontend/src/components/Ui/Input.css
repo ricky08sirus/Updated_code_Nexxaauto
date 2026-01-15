@@ -37,7 +37,7 @@
 /* Icon */
 .auth-input-icon {
   position: absolute;
-  left: 14px;
+  /* left: 14px; */
   top: 50%;
   transform: translateY(-50%);
   color: #9ca3af;

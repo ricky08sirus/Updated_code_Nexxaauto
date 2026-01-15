@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import brandData from "../assets/brandData"; // Import brandData
 
 import logoImage from "../assets/images/brands/Nexxa Logo (2).png";
 import "./Navbar.css";
@@ -20,56 +21,24 @@ export default function Navbar() {
 
   const closeMenu = () => setIsMenuOpen(false);
 
-  // ✅ STATIC BRAND DATA (NO BACKEND)
-  const brands = [
-    { id: 1, title: "Acura" },
-    { id: 2, title: "BMW" },
-    { id: 3, title: "Buick" },
-    { id: 4, title: "Cadillac" },
-    { id: 5, title: "Chevy" },
-    { id: 6, title: "Chrysler" },
-    { id: 7, title: "Daewoo" },
-    { id: 8, title: "Daihatsu" },
-    { id: 9, title: "Dodge" },
-    { id: 10, title: "Eagle" },
-    { id: 11, title: "Ford" },
-    { id: 12, title: "GMC" },
-    { id: 13, title: "Honda" },
-    { id: 14, title: "Hyundai" },
-    { id: 15, title: "Infiniti" },
-    { id: 16, title: "Isuzu" },
-    { id: 17, title: "Jaguar" },
-    { id: 18, title: "Jeep" },
-    { id: 19, title: "Kia" },
-    { id: 20, title: "Land Rover" },
-    { id: 21, title: "Lexus" },
-    { id: 22, title: "Lincoln" },
-    { id: 23, title: "Mazda" },
-    { id: 24, title: "Mercedes" },
-    { id: 25, title: "Mercury" },
-    { id: 26, title: "Mini Cooper" },
-    { id: 27, title: "Mitsubishi" },
-    { id: 28, title: "Nissan" },
-    { id: 29, title: "Oldsmobile" },
-    { id: 30, title: "Playmouth" },
-    { id: 31, title: "Pontiac" },
-    { id: 32, title: "Porshe" },
-    { id: 33, title: "Saab" },
-    { id: 34, title: "Saturn" },
-    { id: 35, title: "Scion" },
-    { id: 36, title: "Subaru" },
-    { id: 37, title: "Suzuki" },
-    { id: 38, title: "Toyota" },
-    { id: 39, title: "Volkswagen" },
-    { id: 40, title: "Volvo" },
-  ];
+  // ✅ GET BRANDS FROM brandData.js
+  const brands = Object.values(brandData);
 
   return (
     <div className="bg-gray-50">
       <nav className="bg-black text-white relative z-50">
         <div className="max-w-full mx-auto px-4">
-          <div className="flex items-center h-16 mx-auto w-[95%] gap-[29px]">
-
+          <div
+            className="flex items-center"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              height: "4rem",
+              width: "95%",
+              gap: "29px",
+              margin: "0 auto",
+            }}
+          >
             {/* LOGO */}
             <Link to="/" className="flex items-center shrink-0">
               <img src={logoImage} alt="Nexxa Logo" className="h-9 w-auto" />
@@ -81,7 +50,7 @@ export default function Navbar() {
                 {brands.map((brand) => (
                   <Link
                     key={brand.id}
-                    to={`/brand/${brand.id}`}
+                    to={`/used/${brand.slug}/parts`}
                     className="scroll-item"
                   >
                     Used {brand.title} Parts
@@ -92,7 +61,7 @@ export default function Navbar() {
                 {brands.map((brand) => (
                   <Link
                     key={`dup-${brand.id}`}
-                    to={`/brand/${brand.id}`}
+                    to={`/used/${brand.slug}/parts`}
                     className="scroll-item"
                   >
                     Used {brand.title} Parts

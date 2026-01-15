@@ -1,10 +1,8 @@
 .auth-page {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #eaf2ff, #f8fbff);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  /* padding: 20px; */
 }
 
 .auth-card {
@@ -30,18 +28,18 @@
 }
 
 .auth-btn {
-  width: 100%;
-  background: #2563eb;
-  color: #fff;
-  padding: 14px;
-  border-radius: 10px;
-  font-weight: 600;
-  margin-top: 12px;
-  transition: background 0.3s ease;
+    width: 100%;
+    background: linear-gradient(45deg, #c41e3a, #167687);
+    color: #fff;
+    padding: 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-top: 12px;
+    transition: background .3s ease;
 }
 
 .auth-btn:hover {
-  background: #1d4ed8;
+  background: #960505;
 }
 
 .auth-switch {

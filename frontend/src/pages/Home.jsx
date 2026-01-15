@@ -21,8 +21,6 @@ import part13 from "../assets/images/Drive Shaft.jpeg";
 import part14 from "../assets/images/Rims.webp";
 
 // Brand Images
-
-
 import brand1 from "../assets/images/brands/accura.webp";
 import brand2 from "../assets/images/brands/american moters.webp";
 import brand3 from "../assets/images/brands/audi.webp";
@@ -34,8 +32,6 @@ import brand8 from "../assets/images/brands/chevrolet.webp";
 import brand9 from "../assets/images/brands/chrysler.webp";
 import brand10 from "../assets/images/brands/daewoo.webp";
 import brand11 from "../assets/images/brands/daihatsu.webp";
-
-
 import brand12 from "../assets/images/brands/dodge.webp";
 import brand13 from "../assets/images/brands/eagle.webp";
 import brand14 from "../assets/images/brands/ford.webp";
@@ -69,9 +65,7 @@ import brand41 from "../assets/images/brands/toyota.webp";
 import brand42 from "../assets/images/brands/volvo.webp";
 import brand43 from "../assets/images/brands/datsun.webp";
 
-
-
-// why nexxa images
+// Why nexxa images
 import headset from "../assets/images/icons/Headset.svg";
 import lowMileage from "../assets/images/icons/Tumble Dry Low Heat.svg";
 import delivery from "../assets/images/icons/Document Delivery.svg";
@@ -79,11 +73,9 @@ import radiator from "../assets/images/icons/Car Radiator.svg";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // API Configuration
-
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 console.log("API Base URL:", API_BASE_URL);
 
-// Parts images array
 // Parts images array with names
 const partsImages = [
   { img: part1, name: "Anti Brake Module Pump" },
@@ -102,55 +94,103 @@ const partsImages = [
   { img: part14, name: "Rims" },
 ];
 
+// Brand image mapping for matching with API data
+const brandImageMap = {
+  'acura': brand1,
+  'american motors': brand2,
+  'audi': brand3,
+  'mercedes-benz': brand4,
+  'mercedes benz': brand4,
+  'benz': brand4,
+  'bmw': brand5,
+  'buick': brand6,
+  'cadillac': brand7,
+  'chevrolet': brand8,
+  'chrysler': brand9,
+  'daewoo': brand10,
+  'daihatsu': brand11,
+  'dodge': brand12,
+  'eagle': brand13,
+  'ford': brand14,
+  'gmc': brand15,
+  'honda': brand16,
+  'hyundai': brand17,
+  'isuzu': brand18,
+  'jaguar': brand19,
+  'kia': brand20,
+  'lamborghini': brand21,
+  'lexus': brand22,
+  'lincoln': brand23,
+  'maybach': brand24,
+  'mazda': brand25,
+  'mercury': brand26,
+  'mini cooper': brand27,
+  'mini': brand27,
+  'mitsubishi': brand28,
+  'nissan': brand29,
+  'oldsmobile': brand30,
+  'plymouth': brand31,
+  'pontiac': brand32,
+  'porsche': brand33,
+  'range rover': brand34,
+  'land rover': brand34,
+  'saab': brand35,
+  'saturn': brand36,
+  'scion': brand37,
+  'subaru': brand38,
+  'suzuki': brand39,
+  'tesla': brand40,
+  'toyota': brand41,
+  'volvo': brand42,
+  'datsun': brand43,
+};
 
-// Brands array
-const brands = [
-  brand1,
-  brand2,
-  brand3,
-  brand4,
-  brand5,
-  brand6,
-  brand7,
-  brand8,
-  brand9,
-  brand10,
-  brand11,
-  brand12,
-  brand13,
-  brand14,
-  brand15,
-  brand16,
-  brand17,
-  brand18,
-  brand19,
-  brand20,
-  brand21,
-  brand22,
-  brand23,
-  brand24,
-  brand25,
-  brand26,
-  brand27,
-  brand28,
-  brand29,
-  brand30,
-  brand31,
-  brand32,
-  brand33,
-  brand34,
-  brand35,
-  brand36,
-  brand37,
-  brand38,
-  brand39,
-  brand40,
-  brand41,
-  brand42,
-  brand43,
-  
+// Fallback brands array (in case API is not available)
+const brandsWithData = [
+  { img: brand1, name: "Acura", slug: "acura" },
+  { img: brand2, name: "American Motors", slug: "american-motors" },
+  { img: brand3, name: "Audi", slug: "audi" },
+  { img: brand4, name: "Mercedes-Benz", slug: "mercedes-benz" },
+  { img: brand5, name: "BMW", slug: "bmw" },
+  { img: brand6, name: "Buick", slug: "buick" },
+  { img: brand7, name: "Cadillac", slug: "cadillac" },
+  { img: brand8, name: "Chevrolet", slug: "chevrolet" },
+  { img: brand9, name: "Chrysler", slug: "chrysler" },
+  { img: brand10, name: "Daewoo", slug: "daewoo" },
+  { img: brand11, name: "Daihatsu", slug: "daihatsu" },
+  { img: brand12, name: "Dodge", slug: "dodge" },
+  { img: brand13, name: "Eagle", slug: "eagle" },
+  { img: brand14, name: "Ford", slug: "ford" },
+  { img: brand15, name: "GMC", slug: "gmc" },
+  { img: brand16, name: "Honda", slug: "honda" },
+  { img: brand17, name: "Hyundai", slug: "hyundai" },
+  { img: brand18, name: "Isuzu", slug: "isuzu" },
+  { img: brand19, name: "Jaguar", slug: "jaguar" },
+  { img: brand20, name: "Kia", slug: "kia" },
+  { img: brand21, name: "Lamborghini", slug: "lamborghini" },
+  { img: brand22, name: "Lexus", slug: "lexus" },
+  { img: brand23, name: "Lincoln", slug: "lincoln" },
+  { img: brand24, name: "Maybach", slug: "maybach" },
+  { img: brand25, name: "Mazda", slug: "mazda" },
+  { img: brand26, name: "Mercury", slug: "mercury" },
+  { img: brand27, name: "Mini Cooper", slug: "mini-cooper" },
+  { img: brand28, name: "Mitsubishi", slug: "mitsubishi" },
+  { img: brand29, name: "Nissan", slug: "nissan" },
+  { img: brand30, name: "Oldsmobile", slug: "oldsmobile" },
+  { img: brand31, name: "Plymouth", slug: "plymouth" },
+  { img: brand32, name: "Pontiac", slug: "pontiac" },
+  { img: brand33, name: "Porsche", slug: "porsche" },
+  { img: brand34, name: "Range Rover", slug: "range-rover" },
+  { img: brand35, name: "Saab", slug: "saab" },
+  { img: brand36, name: "Saturn", slug: "saturn" },
+  { img: brand37, name: "Scion", slug: "scion" },
+  { img: brand38, name: "Subaru", slug: "subaru" },
+  { img: brand39, name: "Suzuki", slug: "suzuki" },
+  { img: brand40, name: "Tesla", slug: "tesla" },
+  { img: brand41, name: "Toyota", slug: "toyota" },
+  { img: brand42, name: "Volvo", slug: "volvo" },
+  { img: brand43, name: "Datsun", slug: "datsun" },
 ];
-
 
 const Home = () => {
   const navigate = useNavigate();
@@ -171,6 +211,7 @@ const Home = () => {
   const [manufacturers, setManufacturers] = useState([]);
   const [models, setModels] = useState([]);
   const [partCategories, setPartCategories] = useState([]);
+  const [brandsWithManufacturers, setBrandsWithManufacturers] = useState([]);
 
   // Loading states
   const [loadingManufacturers, setLoadingManufacturers] = useState(true);
@@ -193,6 +234,30 @@ const Home = () => {
       setSelectedModel("");
     }
   }, [selectedManufacturer]);
+
+  // Match manufacturers with brand images
+  useEffect(() => {
+    if (manufacturers.length > 0) {
+      const matched = manufacturers
+        .map(mfg => {
+          const nameKey = mfg.name.toLowerCase();
+          const img = brandImageMap[nameKey];
+          
+          if (img) {
+            return {
+              id: mfg.id,
+              name: mfg.name,
+              slug: mfg.slug,
+              img: img
+            };
+          }
+          return null;
+        })
+        .filter(Boolean);
+      
+      setBrandsWithManufacturers(matched);
+    }
+  }, [manufacturers]);
 
   const fetchManufacturers = async () => {
     try {
@@ -264,7 +329,6 @@ const Home = () => {
   };
 
   const handleSearch = () => {
-
     if (!selectedYear) {
       alert("Please select a year");
       return;
@@ -313,12 +377,17 @@ const Home = () => {
     }
   };
 
-  // Generate years array (1990 to current year + 1)
+  // Generate years array (1970 to current year + 1)
   const currentYear = new Date().getFullYear();
   const years = Array.from(
     { length: currentYear - 1969 },
     (_, i) => currentYear + 1 - i,
   );
+
+  // Use API-matched brands if available, otherwise fallback to static data
+  const displayBrands = brandsWithManufacturers.length > 0 
+    ? brandsWithManufacturers 
+    : brandsWithData;
 
   return (
     <div>
@@ -338,149 +407,148 @@ const Home = () => {
       )}
 
       {/* Banner Section with Search Form */}
-<section
-  className="banner"
-  style={{ backgroundImage: `url(${bannerImage})` }}
->
-  <div className="banner-overlay"></div>
-  <div className="banner-gradient"></div>
+      <section
+        className="banner"
+        style={{ backgroundImage: `url(${bannerImage})` }}
+      >
+        <div className="banner-overlay"></div>
+        <div className="banner-gradient"></div>
 
-  <div className="banner-inner">
-    <div className="banner-left">
-      <h1>
-        At <span className="highlight">Nexxa Auto</span> <br />
-        Millions of <br />
-        <span className="highlight">OEM Used Parts.</span> <br />
-        Matched to Your Vehicle.
-      </h1>
+        <div className="banner-inner">
+          <div className="banner-left">
+            <h1>
+              At <span className="highlight">Nexxa Auto</span> <br />
+              Millions of <br />
+              <span className="highlight">OEM Used Parts.</span> <br />
+              Matched to Your Vehicle.
+            </h1>
 
-      <p className="why-description">
-        Nexxa Auto Parts offers reliable OEM used car parts with nationwide
-        shipping, expert support, and accurate VIN matching.
-      </p>
-    </div>
+            <p className="why-description">
+              Nexxa Auto Parts offers reliable OEM used car parts with nationwide
+              shipping, expert support, and accurate VIN matching.
+            </p>
+          </div>
 
-    <div className="banner-right">
-      {/* ✅ TEXT OUTSIDE / ABOVE SEARCH BOX */}
-      <p className="search-heading">
-        One Smart Search, Your Perfect Fit Starts Here.
-      </p>
+          <div className="banner-right">
+            {/* TEXT OUTSIDE / ABOVE SEARCH BOX */}
+            <p className="search-heading">
+              One Smart Search, Your Perfect Fit Starts Here.
+            </p>
 
-      {/* 🔲 BLACK SEARCH BOX */}
-      <div className="banner-form">
-        <div className="row">
-          <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
-            <option value="">Year</option>
-            {years.map((year) => (
-              <option key={year} value={year}>{year}</option>
-            ))}
-          </select>
+            {/* BLACK SEARCH BOX */}
+            <div className="banner-form">
+              <div className="row">
+                <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
+                  <option value="">Year</option>
+                  {years.map((year) => (
+                    <option key={year} value={year}>{year}</option>
+                  ))}
+                </select>
 
-          <select
-            value={selectedManufacturer}
-            onChange={handleManufacturerChange}
-            disabled={loadingManufacturers}
-          >
-            <option value="">Make</option>
-            {manufacturers.map((mfg) => (
-              <option key={mfg.id} value={mfg.id}>{mfg.name}</option>
-            ))}
-          </select>
+                <select
+                  value={selectedManufacturer}
+                  onChange={handleManufacturerChange}
+                  disabled={loadingManufacturers}
+                >
+                  <option value="">Make</option>
+                  {manufacturers.map((mfg) => (
+                    <option key={mfg.id} value={mfg.id}>{mfg.name}</option>
+                  ))}
+                </select>
 
-          <select
-            value={selectedModel}
-            onChange={(e) => setSelectedModel(e.target.value)}
-            disabled={!selectedManufacturer || loadingModels}
-          >
-            <option value="">Model</option>
-            {models.map((model) => (
-              <option key={model.id} value={model.id}>{model.name}</option>
-            ))}
-          </select>
+                <select
+                  value={selectedModel}
+                  onChange={(e) => setSelectedModel(e.target.value)}
+                  disabled={!selectedManufacturer || loadingModels}
+                >
+                  <option value="">Model</option>
+                  {models.map((model) => (
+                    <option key={model.id} value={model.id}>{model.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              <select
+                className="full"
+                value={selectedPart}
+                onChange={(e) => setSelectedPart(e.target.value)}
+              >
+                <option value="">Parts</option>
+                {partCategories.map((part) => (
+                  <option key={part.id} value={part.id}>{part.name}</option>
+                ))}
+              </select>
+
+              <button onClick={handleSearch}>Search Now</button>
+            </div>
+
+            <p className="vin-link">
+              Don't know your vehicle? <a href="#vin">Enter VIN</a>
+            </p>
+          </div>
         </div>
 
-        <select
-          className="full"
-          value={selectedPart}
-          onChange={(e) => setSelectedPart(e.target.value)}
-        >
-          <option value="">Parts</option>
-          {partCategories.map((part) => (
-            <option key={part.id} value={part.id}>{part.name}</option>
-          ))}
-        </select>
+        {/* WHY NEXXA INSIDE BANNER */}
+        <div className="why-nexxa banner-why">
+          {/* HORIZONTAL ROW */}
+          <div className="why-top-row">
+            <h2 className="why-heading">Why Nexxa Auto Parts</h2>
 
-        <button onClick={handleSearch}>Search Now</button>
-      </div>
+            <div className="why-box">
+              <img src={headset} alt="Free expert support" />
+              <span>Free expert support</span>
+            </div>
 
-      <p className="vin-link">
-        Don't know your vehicle? <a href="#vin">Enter VIN</a>
-      </p>
-    </div>
-  </div>
+            <div className="why-box">
+              <img src={lowMileage} alt="Low mileage parts" />
+              <span>Low mileage parts</span>
+            </div>
 
-  {/* WHY NEXXA INSIDE BANNER */}
-<div className="why-nexxa banner-why">
-  {/* 🔹 HORIZONTAL ROW */}
-  <div className="why-top-row">
-    <h2 className="why-heading">Why Nexxa Auto Parts</h2>
+            <div className="why-box">
+              <img src={delivery} alt="Nationwide shipping" />
+              <span>Nationwide shipping</span>
+            </div>
 
-    <div className="why-box">
-      <img src={headset} alt="Free expert support" />
-      <span>Free expert support</span>
-    </div>
+            <div className="why-box">
+              <img src={radiator} alt="VIN-matched parts" />
+              <span>VIN-matched parts</span>
+            </div>
+          </div>
 
-    <div className="why-box">
-      <img src={lowMileage} alt="Low mileage parts" />
-      <span>Low mileage parts</span>
-    </div>
-
-    <div className="why-box">
-      <img src={delivery} alt="Nationwide shipping" />
-      <span>Nationwide shipping</span>
-    </div>
-
-    <div className="why-box">
-      <img src={radiator} alt="VIN-matched parts" />
-      <span>VIN-matched parts</span>
-    </div>
-  </div>
-
-  {/* 🔹 PARAGRAPH BELOW */}
-  <p className="why-desc">
-    Free Expert Support: Get guidance from experienced auto parts specialists to
-    find the right fit fast. Low Mileage Parts: Quality-tested OEM used parts with
-    low mileage for long-lasting performance. Nationwide Shipping: Fast and
-    reliable nationwide shipping straight to your doorstep. VIN-Matched Parts:
-    Exact OEM parts matched to your vehicle using precise VIN verification.
-  </p>
-</div>
-</section>
-
+          {/* PARAGRAPH BELOW */}
+          <p className="why-desc">
+            Free Expert Support: Get guidance from experienced auto parts specialists to
+            find the right fit fast. Low Mileage Parts: Quality-tested OEM used parts with
+            low mileage for long-lasting performance. Nationwide Shipping: Fast and
+            reliable nationwide shipping straight to your doorstep. VIN-Matched Parts:
+            Exact OEM parts matched to your vehicle using precise VIN verification.
+          </p>
+        </div>
+      </section>
 
       {/* Explore Our Premium Used Auto Parts */}
       <section className="explore-parts">
-  <h2>
-    Explore Our <span className="highlight">Premium</span> Used Auto Parts
-  </h2>
+        <h2>
+          Explore Our <span className="highlight">Premium</span> Used Auto Parts
+        </h2>
 
-  <p className="section-description">
-    Explore OEM used auto parts—engines, transmissions, modules, rims, and body components for major brands.
-  </p>
+        <p className="section-description">
+          Explore OEM used auto parts—engines, transmissions, modules, rims, and body components for major brands.
+        </p>
 
-  <div className="scroll-wrapper">
-    <div className="cards-container">
-      <div className="cards-track">
-        {[...partsImages, ...partsImages].map((part, idx) => (
-          <div className="part-card" key={idx}>
-            <img src={part.img} alt={part.name} />
-            <p className="part-name">{part.name}</p>
+        <div className="scroll-wrapper">
+          <div className="cards-container">
+            <div className="cards-track">
+              {[...partsImages, ...partsImages].map((part, idx) => (
+                <div className="part-card" key={idx}>
+                  <img src={part.img} alt={part.name} />
+                  <p className="part-name">{part.name}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
+        </div>
+      </section>
 
       {/* How It Works Section */}
       <section className="how-it-works">
@@ -533,89 +601,87 @@ const Home = () => {
       </section>
 
       {/* Customer Reviews */}
-      {/* Customer Reviews */}
-<section className="customer-reviews">
-  <h2>
-    What Our <span>Customers Say</span>
-  </h2>
-  <div className="reviews-slider">
-    <div className="reviews-track">
-      {[
-        {
-          name: "Garza Prosser",
-          review:
-            "I found this company online — great service, excellent prices, and honest people. Deliveries are always on time. Honestly, I highly recommend them. I give them 10 out of 10!",
-        },
-        {
-          name: "Jon Heter",
-          review:
-            "I found this company online as I was hit with a big expense on my Jeep. Pete was so fast in finding exactly what I needed. It took about a week to get to me, and followed through every step to ensure I got a finished great driving Jeep! Their team is extremely empathetic and well deserving of this review!! Don’t hesitate in using them. You’ll be happy you did.",
-        },
-        {
-          name: "Melvin Vaughm",
-          review:
-            "Great auto parts service provider. Honest upfront throughout the entire process. They unfortunately couldn’t locate a respectable part in ideal condition. They were amenable to a complete and total refund. Although it took a bit of time, Dennis worked with me consistently.",
-        },
-        {
-          name: "Jake Carter",
-          review:
-            "Had to get a rear end for 06 Toyota, Pete was extremely helpful and professional. Replied promptly back to texts and calls.",
-        },
-      ]
-        // Duplicate the array for infinite loop effect
-        .concat([
-          {
-            name: "Garza Prosser",
-            review:
-              "I found this company online — great service, excellent prices, and honest people. Deliveries are always on time. Honestly, I highly recommend them. I give them 10 out of 10!",
-          },
-          {
-            name: "Jon Heter",
-            review:
-              "I found this company online as I was hit with a big expense on my Jeep. Pete was so fast in finding exactly what I needed. It took about a week to get to me, and followed through every step to ensure I got a finished great driving Jeep! Their team is extremely empathetic and well deserving of this review!! Don’t hesitate in using them. You’ll be happy you did.",
-          },
-          {
-            name: "Melvin Vaughm",
-            review:
-              "Great auto parts service provider. Honest upfront throughout the entire process. They unfortunately couldn’t locate a respectable part in ideal condition. They were amenable to a complete and total refund. Although it took a bit of time, Dennis worked with me consistently.",
-          },
-          {
-            name: "Jake Carter",
-            review:
-              "Had to get a rear end for 06 Toyota, Pete was extremely helpful and professional. Replied promptly back to texts and calls.",
-          },
-        ])
-        .map((item, index) => (
-          <div className="review-card" key={index}>
-            <div className="review-header">
-              <span className="user-icon">👤</span>
-              <h4>{item.name}</h4>
-            </div>
-            <span className="review-time">4 weeks ago</span>
-            <div className="review-stars">★★★★★</div>
-            <p className="review-text">{item.review}</p>
+      <section className="customer-reviews">
+        <h2>
+          What Our <span>Customers Say</span>
+        </h2>
+        <div className="reviews-slider">
+          <div className="reviews-track">
+            {[
+              {
+                name: "Garza Prosser",
+                review:
+                  "I found this company online — great service, excellent prices, and honest people. Deliveries are always on time. Honestly, I highly recommend them. I give them 10 out of 10!",
+              },
+              {
+                name: "Jon Heter",
+                review:
+                  "I found this company online as I was hit with a big expense on my Jeep. Pete was so fast in finding exactly what I needed. It took about a week to get to me, and followed through every step to ensure I got a finished great driving Jeep! Their team is extremely empathetic and well deserving of this review!! Don't hesitate in using them. You'll be happy you did.",
+              },
+              {
+                name: "Melvin Vaughm",
+                review:
+                  "Great auto parts service provider. Honest upfront throughout the entire process. They unfortunately couldn't locate a respectable part in ideal condition. They were amenable to a complete and total refund. Although it took a bit of time, Dennis worked with me consistently.",
+              },
+              {
+                name: "Jake Carter",
+                review:
+                  "Had to get a rear end for 06 Toyota, Pete was extremely helpful and professional. Replied promptly back to texts and calls.",
+              },
+            ]
+              // Duplicate the array for infinite loop effect
+              .concat([
+                {
+                  name: "Garza Prosser",
+                  review:
+                    "I found this company online — great service, excellent prices, and honest people. Deliveries are always on time. Honestly, I highly recommend them. I give them 10 out of 10!",
+                },
+                {
+                  name: "Jon Heter",
+                  review:
+                    "I found this company online as I was hit with a big expense on my Jeep. Pete was so fast in finding exactly what I needed. It took about a week to get to me, and followed through every step to ensure I got a finished great driving Jeep! Their team is extremely empathetic and well deserving of this review!! Don't hesitate in using them. You'll be happy you did.",
+                },
+                {
+                  name: "Melvin Vaughm",
+                  review:
+                    "Great auto parts service provider. Honest upfront throughout the entire process. They unfortunately couldn't locate a respectable part in ideal condition. They were amenable to a complete and total refund. Although it took a bit of time, Dennis worked with me consistently.",
+                },
+                {
+                  name: "Jake Carter",
+                  review:
+                    "Had to get a rear end for 06 Toyota, Pete was extremely helpful and professional. Replied promptly back to texts and calls.",
+                },
+              ])
+              .map((item, index) => (
+                <div className="review-card" key={index}>
+                  <div className="review-header">
+                    <span className="user-icon">👤</span>
+                    <h4>{item.name}</h4>
+                  </div>
+                  <span className="review-time">4 weeks ago</span>
+                  <div className="review-stars">★★★★★</div>
+                  <p className="review-text">{item.review}</p>
+                </div>
+              ))}
           </div>
-        ))}
-    </div>
-  </div>
-</section>
+        </div>
+      </section>
 
-
-      {/* Brands Section */}
+      {/* Brands Section - Non-clickable display only */}
       <section className="brands-section">
         <h2>Search by Brands</h2>
         <p>We stock parts for all major automotive brands</p>
         <div className="brands-marquee">
           <div className="brands-track">
-            {brands.map((brand, idx) => (
+            {displayBrands.map((brand, idx) => (
               <div className="brand-card" key={idx}>
-                <img src={brand} alt={`Brand ${idx + 1}`} />
+                <img src={brand.img} alt={brand.name} title={brand.name} />
               </div>
             ))}
             {/* Duplicate for smooth infinite scroll */}
-            {brands.map((brand, idx) => (
+            {displayBrands.map((brand, idx) => (
               <div className="brand-card" key={`dup-${idx}`}>
-                <img src={brand} alt={`Brand ${idx + 1}`} />
+                <img src={brand.img} alt={brand.name} title={brand.name} />
               </div>
             ))}
           </div>

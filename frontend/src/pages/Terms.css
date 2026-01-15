@@ -15,27 +15,25 @@ body {
 
 .main-heading {
     font-size: 40px;
-    /* margin-bottom: 30px; */
-    color: red;
-    font-weight: 500;
-    text-shadow: 1px 2px 5px black;
-      padding: 48px 16px;
+    color: #c41e3a;
+    font-weight: bold;
 
 }
 
 .sub-heading {
-  color: #333;
+  color:black;
   font-size: 1.4rem;
   margin-top: 20px;
   margin-bottom: 10px;
+  font-weight: bold;
 }
 .paragraph a{
     text-decoration: underline;;
 }
 .paragraph {
-  font-size: 21px;
+  font-size: 17px;
   margin-bottom: 15px;
-  color: #555;
+  color: black;
 }
 
 @media (max-width: 768px) {

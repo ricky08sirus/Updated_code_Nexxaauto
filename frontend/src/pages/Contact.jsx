@@ -124,7 +124,7 @@ const Contact = () => {
             Contact <span>Us</span>
           </h2>
 
-          <p>
+          <p style={{color:"black", fontWeight:"normal"}}>
             We're proud to serve customers nationwide with top-quality
             second-hand car parts, trusted by thousands of mechanics and vehicle
             owners.
@@ -248,7 +248,7 @@ const Contact = () => {
               </label>
             </div>
 
-            <button onClick={handleSubmit} disabled={isSubmitting} className="submit-btn">
+            <button onClick={handleSubmit} disabled={isSubmitting} className="submit-btn" style={{color:"white"}}>
               {isSubmitting ? "Sending..." : "Submit"}
             </button>
           </div>

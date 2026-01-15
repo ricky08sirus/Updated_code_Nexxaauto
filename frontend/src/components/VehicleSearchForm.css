@@ -1,7 +1,7 @@
 /* VehicleSearchForm.css */
 
 .vehicle-search-form {
-  background: rgba(0, 0, 0, 0.85);
+  background: linear-gradient(45deg, black, #1092b9);
   backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 32px;
@@ -80,7 +80,7 @@
 .search-submit-btn {
   width: 100%;
   padding: 14px 24px;
-  background-color: #dc2626;
+  background:linear-gradient(137deg, #ff002b, #770518);
   color: #ffffff;
   font-size: 1.125rem;
   font-weight: 600;
