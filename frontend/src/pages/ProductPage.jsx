@@ -649,7 +649,7 @@ import React, { useState, useEffect } from 'react';
 import { Heart, Share2, ChevronLeft, ChevronRight, Package, ShieldCheck } from 'lucide-react';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import './ProductPage.css';
-import logoImage from "../assets/images/brands/Nexxa Logo (2).png";
+import logoImage from "../assets/images/brands/logo-white.png";
 import AuthModal from "../components/AuthModal";
 import visaIcon from "../assets/images/visa.png";
 import amexIcon from "../assets/images/amex.png";
@@ -1296,7 +1296,7 @@ If the part doesn't match your VIN or arrives damaged during shipping, we've got
                         Price coming soon
                       </div>
                     )}
-                    <p className="nexxa-alternative-seller">Seller with 100% positive feedback</p>
+                    {/* <p className="nexxa-alternative-seller">Seller with 100% positive feedback</p> */}
                   </div>
                 </div>
               ))}
